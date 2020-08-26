@@ -1,7 +1,7 @@
 from OpenGL.GL import *
 import pygame
 
-textureSurface = pygame.image.load('../images/original-image.png'), pygame.image.load('../images/dilation.png'), pygame.image.load('../images/result-image.png')
+textureSurface = pygame.image.load('../assets/original-image.png'), pygame.image.load('../assets/dilation.png'), pygame.image.load('../assets/result-image.png')
 textureSurface = pygame.transform.rotate(textureSurface[0],180),pygame.transform.rotate(textureSurface[1],180),pygame.transform.rotate(textureSurface[2],180)
 textureData = pygame.image.tostring(textureSurface[0], "RGBA"), pygame.image.tostring(textureSurface[1], "RGBA"), pygame.image.tostring(textureSurface[2], "RGBA")
 width = textureSurface[0].get_width(), textureSurface[1].get_width(), textureSurface[2].get_width()

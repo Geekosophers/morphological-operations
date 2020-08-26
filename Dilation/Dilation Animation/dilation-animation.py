@@ -18,7 +18,7 @@ import textures
 
 HEIGHT = 3 # distance of kernel from x-y plane
 
-img = cv2.imread('../images/dilation7x7sample2.jpg',0)
+img = cv2.imread('../assets/dilation7x7sample2.jpg',0)
 ret,thresh1 = cv2.threshold(img,127,255,cv2.THRESH_BINARY)
 
 n1, n2 = img.shape
