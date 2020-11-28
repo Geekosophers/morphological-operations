@@ -7,10 +7,11 @@ This python project is designed to give users the ability to visualize different
 git clone https://github.com/Geekosophers/morphological-operations.git
 
 ### Step-2: Create a virtual environment
-python3 -m venv morph-ops
+python -m venv morph-ops
 
-### Step-3: Activate the virtual environment (for mac)
-source morph-ops.bin/activate
+### Step-3: Activate the virtual environment (for mac and linux)
+Command for Mac and Linux: source morph-ops.bin/activate
+Command for Windows: .\morph-ops\Scripts\activate
 
 ### Step-4: Install the dependencies
 pip install -r requirements.txt
