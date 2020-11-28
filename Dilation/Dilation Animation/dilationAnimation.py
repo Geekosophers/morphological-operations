@@ -16,37 +16,41 @@ from drawZero import drawZero
 import textures
 
 
-HEIGHT = 3 # distance of kernel from x-y plane
-
-img = cv2.imread('./Dilation/assets/dilation7x7sample2.jpg',0)
-ret,thresh1 = cv2.threshold(img,127,255,cv2.THRESH_BINARY)
-
-n1, n2 = img.shape
-n1+=2 # horizontal number of pixels plus 2 for padding
-n2+=2 # vertical number of pixels plus 2 for padding
-
-threshNew = [['' for j in range(n1)] for i in range(n2)]
-resultMatrix = [['' for j in range(n1)] for i in range(n2)]
-dilationSquareMatrixFront = [[[(2+n1,-n2-2,0),(2+n1,0.5-n2-2,1),(n1-2,0.5-n2-2,1),(n1-2,-n2-2,0)]]]
-dilationSquareMatrixBack = [[[(2+n1,-n2-2+1,0),(2+n1,0.5-n2-2,1),(n1-2,0.5-n2-2,1),(n1-2,-n2-2+1,0)]]]
-
-for y in range(n2):
-    for x in range(n1):
-        if(y==0 or x==0 or y==n2-1 or x==n1-1):
-            threshNew[y][x] = 0
-        else:
-            threshNew[y][x] = thresh1[y-1][x-1]
-        resultMatrix[y][x] = ''
-
-
-thresh1 = np.array(threshNew,np.uint8)
-kernel = np.array([[0, 1, 0], [1, 1, 1], [0, 1, 0]], np.uint8)
-kn1, kn2 = kernel.shape
-
-
 def main():
+
+    HEIGHT = 3 # distance of kernel from x-y plane
+
+    img = cv2.imread('./Dilation/assets/dilation7x7sample2.jpg',0)
+    ret,thresh1 = cv2.threshold(img,127,255,cv2.THRESH_BINARY)
+
+    n1, n2 = img.shape
+    n1+=2 # horizontal number of pixels plus 2 for padding
+    n2+=2 # vertical number of pixels plus 2 for padding
+
+    threshNew = [['' for j in range(n1)] for i in range(n2)]
+    resultMatrix = [['' for j in range(n1)] for i in range(n2)]
+    dilationSquareMatrixFront = [[[(2+n1,-n2-2,0),(2+n1,0.5-n2-2,1),(n1-2,0.5-n2-2,1),(n1-2,-n2-2,0)]]]
+    dilationSquareMatrixBack = [[[(2+n1,-n2-2+1,0),(2+n1,0.5-n2-2,1),(n1-2,0.5-n2-2,1),(n1-2,-n2-2+1,0)]]]
+
+    for y in range(n2):
+        for x in range(n1):
+            if(y==0 or x==0 or y==n2-1 or x==n1-1):
+                threshNew[y][x] = 0
+            else:
+                threshNew[y][x] = thresh1[y-1][x-1]
+            resultMatrix[y][x] = ''
+
+
+    thresh1 = np.array(threshNew,np.uint8)
+    kernel = np.array([[0, 1, 0], [1, 1, 1], [0, 1, 0]], np.uint8)
+    kn1, kn2 = kernel.shape
+
+    squareMatrix = makeSquareMatrix(n1,n2)
+    squareResultMatrix = makeSquareResultMatrix(n1,n2)
+    kernelSquareMatrix = makeKernelMatrix(0,0,HEIGHT,kn1,kn2)
+
     pygame.init()
-    display = (1000,600)
+    display = (1000,563)
     img = pygame.display.set_mode(display, DOUBLEBUF|OPENGL)
 
     gluPerspective(45, (display[0]/display[1]), 0.1, 50.0)
@@ -101,7 +105,8 @@ def main():
             if keys[K_DOWN]:
                 glTranslatef(0, 0, 1)
 
-        glClearColor(0, 1, 1, 0)
+        # glClearColor(0.88, 0.3, 0.53, 1)
+        glClearColor(0.29,0.32,0.6, 1)
         glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT)
         
         if(xindex==0 and yindex==0):
@@ -124,10 +129,8 @@ def main():
         pygame.display.flip()
         pygame.time.wait(10)
 
-squareMatrix = makeSquareMatrix(n1,n2)
-squareResultMatrix = makeSquareResultMatrix(n1,n2)
-kernelSquareMatrix = makeKernelMatrix(0,0,HEIGHT,kn1,kn2)
-main()
+
+# main()
 
 
 
