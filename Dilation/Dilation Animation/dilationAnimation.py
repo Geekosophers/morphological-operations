@@ -16,14 +16,17 @@ from drawZero import drawZero
 import textures
 
 
-def main():
+def main(thresh1,kernel):
+
+    print(kernel)
 
     HEIGHT = 3 # distance of kernel from x-y plane
 
     img = cv2.imread('./Dilation/assets/dilation7x7sample2.jpg',0)
+
     ret,thresh1 = cv2.threshold(img,127,255,cv2.THRESH_BINARY)
 
-    n1, n2 = img.shape
+    n1, n2 = thresh1.shape
     n1+=2 # horizontal number of pixels plus 2 for padding
     n2+=2 # vertical number of pixels plus 2 for padding
 
@@ -42,7 +45,7 @@ def main():
 
 
     thresh1 = np.array(threshNew,np.uint8)
-    kernel = np.array([[0, 1, 0], [1, 1, 1], [0, 1, 0]], np.uint8)
+    kernel = np.array([[0, 1, 0, 0], [1, 1, 1, 0], [0, 1, 0, 1], [0, 0, 0, 0]], np.uint8)
     kn1, kn2 = kernel.shape
 
     squareMatrix = makeSquareMatrix(n1,n2)
@@ -127,10 +130,10 @@ def main():
         rate = (rate+1)%10
     
         pygame.display.flip()
-        pygame.time.wait(10)
+        pygame.time.wait(50)
 
 
-# main()
+main('a','a')
 
 
 
