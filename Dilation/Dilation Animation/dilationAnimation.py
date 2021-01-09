@@ -133,7 +133,7 @@ def main(thresh1,kernel):
         pygame.time.wait(50)
 
 
-main('a','a')
+# main('a','a')
 
 
 

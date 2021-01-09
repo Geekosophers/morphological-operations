@@ -1,0 +1,105 @@
+<html>
+    <head>
+        <title>Dilation Animation</title>
+
+        <style>
+            body {
+                margin: 0;
+            }
+            canvas {
+                width: 100%;
+                height: 100%;
+            }
+        </style>
+    </head>
+
+    <body>
+        <script src="js/three.js"></script>
+        <script src="js/OrbitControls.js"></script>
+
+        <script>
+            var scene = new THREE.Scene();
+            scene.background = new THREE.Color( 0xFFFFFF );
+            var camera = new THREE.PerspectiveCamera( 75, window.innerWidth/window.innerHeight, 0.1, 1000);
+
+            var renderer = new THREE.WebGLRenderer();
+            renderer.setSize( window.innerWidth, window.innerHeight);
+            document.body.appendChild( renderer.domElement);
+
+            window.addEventListener('resize', function(){
+                var width = window.innerWidth;
+                var height = window.innerHeight;
+                renderer.setSize( width, height);
+                camera.aspect = width/height;
+                camera.updateProjectionMatrix();
+            });
+
+            var controls = new THREE.OrbitControls(camera, renderer.domElement);
+
+            // create the shape
+            var geometry = new THREE.BoxGeometry( 0.9, 1, 0.1);
+
+            var texture = new THREE.TextureLoader().load( 'assets/ICON.jpg' );
+
+            // material, color and image texture
+            var material = new THREE.MeshBasicMaterial( { color: 0xe14e87, wireframe: false } );
+            // var material = new THREE.MeshBasicMaterial( { map: texture } );
+            for(i=-3;i<3;i++){
+                var cube = new THREE.Mesh( geometry, material);
+                cube.position.set(i,0,0);
+                scene.add(cube);
+            }
+
+            var wallMaterial = new THREE.MeshBasicMaterial( { color: 0x4b5399, wireframe: false } );
+            var wallGeometry = new THREE.BoxGeometry( 10, 10, 0.1);
+            var wall = new THREE.Mesh( wallGeometry, wallMaterial);
+            wall.position.set(0,0,-1);
+            scene.add(wall);
+
+            var loader = new THREE.FontLoader();
+            loader.load( 'fonts/helvetiker_regular.typeface.json', function ( font ) {
+
+            var textGeometry = new THREE.TextGeometry( "1", {
+
+                font: font,
+
+                size: 0.6,
+                height: 0.1,
+            });
+
+            var textMaterial = new THREE.MeshPhongMaterial( 
+                { color: 0xff0000, specular: 0xffffff }
+            );
+
+            var mesh = new THREE.Mesh( textGeometry, textMaterial );
+            mesh.position.set(-3.3,-0.3,0);
+
+            scene.add( mesh );
+
+            }); 
+
+            camera.position.z = 5;
+
+            // animation logic
+            var update = function(){
+                // cube.rotation.x += 0.01;
+                // cube.rotation.y += 0.005;
+            };
+
+            // drar scene
+            var render = function(){
+                renderer.render(scene, camera);
+            };
+
+            // run animation loop {update, render, repeat}
+            var animationLoop = function(){
+                requestAnimationFrame(animationLoop);
+
+                update();
+                render();
+            };
+
+            animationLoop();
+        </script>
+    </body>
+</html>
