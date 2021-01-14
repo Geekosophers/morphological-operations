@@ -16,8 +16,61 @@
     <body>
         <script src="js/three.js"></script>
         <script src="js/OrbitControls.js"></script>
+        <script src="js/drawText.js"></script>
+        <script src="js/drawCube.js"></script>
 
         <script>
+
+            // for showing the frame rate, ram usage
+            (function(){var script=document.createElement('script');script.onload=function(){var stats=new Stats();document.body.appendChild(stats.dom);requestAnimationFrame(function loop(){stats.update();requestAnimationFrame(loop)});};script.src='//mrdoob.github.io/stats.js/build/stats.min.js';document.head.appendChild(script);})()
+
+            var drawImage = function(){
+                for(y=m-1;y>=0;y--){
+                    for(x=0;x<n;x++){
+                        drawCube(x,y,0,0x292929);
+                        drawText(x-0.18,y-0.2,0.1,imageArray[m-1-y][x],false,false);
+                    }
+                }
+            };
+
+            var kernelObj = [];
+            var kernelText = [];
+
+            var drawKernel = function(baseX,baseY){
+                for(y=m-1;y>=m-mk;y--){
+                    kernelTempObj = []
+                    for(x=0;x<nk;x++){
+                        var cube = drawCube(x+baseX,y+baseY,2,0x292929);
+                        var content = drawText(x-0.18+baseX,y-0.2+baseY,2.1,imageArray[m-1-y][x],true,x==(nk-1));
+                        kernelTempObj.push(cube);
+                    }
+                    kernelObj.push(kernelTempObj);
+                }
+            };
+
+            var updatedPositionx=0;
+            var updatedPositiony=2;
+            var updateKernelPosition = function(){
+                updatedPositionx = (updatedPositionx+1)%3;
+                updatedPositiony = updatedPositionx==0 ? ((updatedPositiony-1)>=0 ? (updatedPositiony-1): 2): updatedPositiony;
+
+                for(y=0;y<kernelObj.length;y++){
+                    for(x=0;x<kernelObj[0].length;x++){
+                        kernelObj[y][x].position.x=updatedPositionx+x;
+                        kernelObj[y][x].position.y=updatedPositiony+y;
+                        try{
+                            kernelText[y][x].position.x=updatedPositionx+x-0.18;
+                            kernelText[y][x].position.y=updatedPositiony+y-0.2;
+                        }catch(err){
+                            console.log('textHasNotInitialized');
+                        }
+                    }
+                }
+                console.log(kernelText);
+            };
+
+            
+
             var scene = new THREE.Scene();
             scene.background = new THREE.Color( 0xFFFFFF );
             var camera = new THREE.PerspectiveCamera( 75, window.innerWidth/window.innerHeight, 0.1, 1000);
@@ -34,71 +87,49 @@
                 camera.updateProjectionMatrix();
             });
 
+            var imageArray = [
+                ['1','1','0','0','1'],
+                ['1','1','0','1','1'],
+                ['1','1','0','1','0'],
+                ['1','1','0','1','0'],
+                ['1','1','0','1','0']];
+
+            var kernelArray = [
+                ['0','1','0'],
+                ['1','1','1'],
+                ['0','1','0']
+            ]
+
+            var m = imageArray.length;
+            var n = imageArray[0].length;
+
+            var mk = kernelArray.length;
+            var nk = kernelArray[0].length;
+
             var controls = new THREE.OrbitControls(camera, renderer.domElement);
 
-            // create the shape
-            var geometry = new THREE.BoxGeometry( 0.9, 1, 0.1);
+            drawImage();
 
-            var texture = new THREE.TextureLoader().load( 'assets/ICON.jpg' );
-
-            // material, color and image texture
-            var material = new THREE.MeshBasicMaterial( { color: 0xe14e87, wireframe: false } );
-            // var material = new THREE.MeshBasicMaterial( { map: texture } );
-            for(i=-3;i<3;i++){
-                var cube = new THREE.Mesh( geometry, material);
-                cube.position.set(i,0,0);
-                scene.add(cube);
-            }
-
-            var wallMaterial = new THREE.MeshBasicMaterial( { color: 0x4b5399, wireframe: false } );
-            var wallGeometry = new THREE.BoxGeometry( 10, 10, 0.1);
-            var wall = new THREE.Mesh( wallGeometry, wallMaterial);
-            wall.position.set(0,0,-1);
-            scene.add(wall);
-
-            var loader = new THREE.FontLoader();
-            loader.load( 'fonts/helvetiker_regular.typeface.json', function ( font ) {
-
-            var textGeometry = new THREE.TextGeometry( "1", {
-
-                font: font,
-
-                size: 0.6,
-                height: 0.1,
-            });
-
-            var textMaterial = new THREE.MeshPhongMaterial( 
-                { color: 0xff0000, specular: 0xffffff }
-            );
-
-            var mesh = new THREE.Mesh( textGeometry, textMaterial );
-            mesh.position.set(-3.3,-0.3,0);
-
-            scene.add( mesh );
-
-            }); 
-
-            camera.position.z = 5;
+            drawKernel(0,0);
+            camera.position.z = 10;
 
             // animation logic
             var update = function(){
-                // cube.rotation.x += 0.01;
-                // cube.rotation.y += 0.005;
+                
             };
 
-            // drar scene
+            // draw scene
             var render = function(){
                 renderer.render(scene, camera);
             };
 
             // run animation loop {update, render, repeat}
             var animationLoop = function(){
-                requestAnimationFrame(animationLoop);
-
+                requestAnimationFrame( animationLoop );
                 update();
                 render();
             };
-
+            setInterval(updateKernelPosition, 1000);
             animationLoop();
         </script>
     </body>
