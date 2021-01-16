@@ -24,49 +24,102 @@
             // for showing the frame rate, ram usage
             (function(){var script=document.createElement('script');script.onload=function(){var stats=new Stats();document.body.appendChild(stats.dom);requestAnimationFrame(function loop(){stats.update();requestAnimationFrame(loop)});};script.src='//mrdoob.github.io/stats.js/build/stats.min.js';document.head.appendChild(script);})()
 
+            var kernelObj = [];
+            var kernelText = [];
+            var cubeObj = [];
+            var resultObj = [];
+
             var drawImage = function(){
-                for(y=m-1;y>=0;y--){
-                    for(x=0;x<n;x++){
-                        drawCube(x,y,0,0x292929);
-                        drawText(x-0.18,y-0.2,0.1,imageArray[m-1-y][x],false,false);
+                for(y=m;y>0;y--){
+                    var resultTempObj = [];
+                    for(x=n+4;x<2*n+4;x++){
+                        var cube = drawCube(x,y,0,0x292929);
+                        // drawText(x-0.18,y-0.2,0.1,imageArray[m-y][x-n-4],false,false);
+                        resultTempObj.push(cube);
                     }
+                    resultObj.push(resultTempObj);
                 }
             };
 
-            var kernelObj = [];
-            var kernelText = [];
+            var drawPaddedImage = function(){
+                for(y=m+1;y>=0;y--){
+                    var cubeTempObj = [];
+                    for(x=0;x<n+2;x++){
+                        if(x==0 || y==0 || x==n+1 || y==m+1){
+                            var colorOfCube = 0x696969;
+                        }
+                        else{
+                            colorOfCube = 0x292929;
+                        }
+                        var cube = drawCube(x,y,0,colorOfCube);
+                        drawText(x-0.18,y-0.2,0.1,paddedImageArray[m+1-y][x],false,false);
+                        cubeTempObj.push(cube);
+                    }
+                    cubeObj.push(cubeTempObj);
+                }
+            };
 
-            var drawKernel = function(baseX,baseY){
-                for(y=m-1;y>=m-mk;y--){
-                    kernelTempObj = []
+            var drawKernel = function(basex,basey){
+                for(y=m+1;y>=m-mk+2;y--){
+                    var kernelTempObj = [];
                     for(x=0;x<nk;x++){
-                        var cube = drawCube(x+baseX,y+baseY,2,0x292929);
-                        var content = drawText(x-0.18+baseX,y-0.2+baseY,2.1,imageArray[m-1-y][x],true,x==(nk-1));
+                        if(kernelArray[m+1-y][x]=='1')
+                            var colorOfCube = 0xfbdd11;
+                        else
+                            colorOfCube = 0x292929;
+                        var cube = drawCube(x+basex,y+basey,3,colorOfCube);
+                        var content = drawText(x+basex-0.18,y+basey-0.2,3.1,kernelArray[m+1-y][x],true,x==(nk-1));
                         kernelTempObj.push(cube);
                     }
                     kernelObj.push(kernelTempObj);
                 }
             };
 
-            var updatedPositionx=0;
-            var updatedPositiony=2;
-            var updateKernelPosition = function(){
-                updatedPositionx = (updatedPositionx+1)%3;
-                updatedPositiony = updatedPositionx==0 ? ((updatedPositiony-1)>=0 ? (updatedPositiony-1): 2): updatedPositiony;
+            var colorTheCubeToDefault = function(){
+                for(y=m+1;y>=0;y--){
+                    for(x=0;x<n+2;x++){
+                        if(x==0 || y==0 || x==n+1 || y==m+1){
+                            var colorOfCube = 0x696969;
+                        }
+                        else{
+                            colorOfCube = 0x292929;
+                        }
+                        cubeObj[m+1-y][x].material.color.setHex( colorOfCube);
+                    }
+                }
+            }
 
-                for(y=0;y<kernelObj.length;y++){
-                    for(x=0;x<kernelObj[0].length;x++){
-                        kernelObj[y][x].position.x=updatedPositionx+x;
-                        kernelObj[y][x].position.y=updatedPositiony+y;
+            var updatedPositionx=0;
+            var updatedPositiony=0;
+
+            var updateKernelPosition = function(){
+                var isUpdatedWithOne = false;
+                colorTheCubeToDefault();
+                for(y=m+1;y>=m-mk+2;y--){
+                    for(x=0;x<nk;x++){
+                        if(kernelArray[m+1-y][x]=='1'){
+                            if(paddedImageArray[m+1-y+updatedPositiony][updatedPositionx+x]=='0')
+                                cubeObj[m+1-y+updatedPositiony][updatedPositionx+x].material.color.setHex( 0xfbdd11 );
+                            else{
+                                cubeObj[m+1-y+updatedPositiony][updatedPositionx+x].material.color.setHex( 0x4caf50 );
+                                drawText(updatedPositionx-0.18+m+4,n-updatedPositiony-0.2,0.1,'1',false,false);
+                                isUpdatedWithOne = true;
+                            }
+                        }
+                        kernelObj[m+1-y][x].position.x=updatedPositionx+x;
+                        kernelObj[m+1-y][x].position.y=y-updatedPositiony;
                         try{
-                            kernelText[y][x].position.x=updatedPositionx+x-0.18;
-                            kernelText[y][x].position.y=updatedPositiony+y-0.2;
+                            kernelText[m+1-y][x].position.x=updatedPositionx+x-0.18;
+                            kernelText[m+1-y][x].position.y=y-0.2-updatedPositiony;
                         }catch(err){
                             console.log('textHasNotInitialized');
                         }
                     }
                 }
-                console.log(kernelText);
+                if(isUpdatedWithOne==false)
+                    drawText(updatedPositionx-0.18+m+4,n-updatedPositiony-0.2,0.1,'0',false,false);
+                updatedPositionx = (updatedPositionx+1)%(n+3-nk);
+                updatedPositiony = updatedPositionx==0 ? ((updatedPositiony+1)<m+3-mk ? (updatedPositiony+1): 0): updatedPositiony;
             };
 
             
@@ -88,15 +141,16 @@
             });
 
             var imageArray = [
-                ['1','1','0','0','1'],
-                ['1','1','0','1','1'],
+                ['0','0','0','0','1'],
+                ['0','0','0','1','1'],
                 ['1','1','0','1','0'],
                 ['1','1','0','1','0'],
-                ['1','1','0','1','0']];
+                ['1','1','0','1','0']
+            ];
 
             var kernelArray = [
-                ['0','1','0'],
                 ['1','1','1'],
+                ['1','1','0'],
                 ['0','1','0']
             ]
 
@@ -106,11 +160,25 @@
             var mk = kernelArray.length;
             var nk = kernelArray[0].length;
 
+            var paddedImageArray = new Array(m+2).fill(0).map(() => new Array(n+2).fill(0))
+
+            for(i=0;i<m+2;i++){
+                for(j=0;j<n+2;j++){
+                    if(i==0 || j==0 || i==m+1 || j==n+1){
+                        paddedImageArray[i][j]='0';
+                    }
+                    else{
+                        paddedImageArray[i][j]=imageArray[i-1][j-1];
+                    }
+                }
+            }
+
             var controls = new THREE.OrbitControls(camera, renderer.domElement);
 
             drawImage();
+            drawPaddedImage();
 
-            drawKernel(0,0);
+            drawKernel(-100,0);
             camera.position.z = 10;
 
             // animation logic
@@ -129,7 +197,7 @@
                 update();
                 render();
             };
-            setInterval(updateKernelPosition, 1000);
+            setInterval(updateKernelPosition, 3000);
             animationLoop();
         </script>
     </body>

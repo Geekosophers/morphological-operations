@@ -51,5 +51,5 @@ var drawText = function(xpos,ypos,zpos,textName,isKernel,pushToArray){
             
         
     } ); //end load function
-    console.log(text);
+    // console.log(text);
 };
