@@ -1,7 +1,6 @@
 <html>
     <head>
         <title>Dilation Animation</title>
-        <!-- <link rel="stylesheet" href="css/style.css"> -->
         <style>
             body {
                 margin: 0;
@@ -14,70 +13,63 @@
     </head>
 
     <body>
-        <script src="js/three.js"></script>
-        <script src="js/OrbitControls.js"></script>
-        <script src="js/drawText.js"></script>
-        <script src="js/drawCube.js"></script>
-        <!-- <script src="js/dilationAnimation.js"></script> -->
-
+        <script src="https://cdn.jsdelivr.net/npm/p5@1.2.0/lib/p5.min.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script src="js/sketch.js"></script>
         
-        <!-- <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-        <script>
-            $(document).ready(function(){
-                $(".default_option").click(function(){
-                $(this).parent().toggleClass("active");
-                })
+        <div>
+            <div>Kernel Dimensions</div>
+            <select name="mk-nk-value" property="disease_name" size="1" onchange="onchange_action();">
+                <option selected="selected"></option> 
+                <option value="3">3x3</option>
+                <option value="5">5x5</option>
+                <option value="7">7x7</option>
+            </select>
+        </div>
 
-                $(".select_ul li").click(function(){
-                var currentele = $(this).html();
-                $(".default_option li").html(currentele);
-                $(this).parents(".select_wrap").removeClass("active");
-                })
+        <div>
+            <div>Image Dimensions</div>
+            <select name="m-value" property="disease_name" size="1" onchange="onchange_action();">
+                <option selected="selected"></option> 
+                <option value="3">3</option>
+                <option value="5">5</option>
+                <option value="7">7</option>
+            </select>
+            <span>X</span>
+            <select name="n-value" property="disease_name" size="1" onchange="onchange_action();">
+                <option selected="selected"></option> 
+                <option value="3">3</option>
+                <option value="5">5</option>
+                <option value="7">7</option>
+            </select>
+        </div>
+
+        <button onclick="myFunction()">Start</button>
+        <a href="animation.html?var1=42" target="_self"> Link </a>
+        <button id='store'>Get</button>
+
+        <script>
+            var myFunction = function(){
+                kernelArray = '';
+                imageArray = '';
+                for(i=0;i<kernelSquares.length;i++){
+                    console.log(kernelSquares[i].textValue);
+                    kernelArray += kernelSquares[i].textValue;
+                }
+                for(i=0;i<imageSquares.length;i++){
+                    imageArray += imageSquares[i].textValue;
+                }
+                var kernelValue = document.getElementsByName("mk-nk-value")[0];
+                var m = document.getElementsByName("m-value")[0];
+                var n = document.getElementsByName("n-value")[0];
+                var mydata = kernelArray + '|' + imageArray + '|' + kernelValue.value + '|' + m.value + '|' + n.value;
+                sessionStorage.setItem('myData', mydata);
+            }
+            
+            $('#store').on('click', function(){
+                var myArray = sessionStorage.getItem('myData');
+                console.log(myArray);
             });
         </script>
-
-
-        <div class="wrapper">
-            <div class="title">
-              Kernel Image Array
-            </div>
-            <div class="select_wrap">
-                <ul class="default_option">
-                    <li>
-                        <div class="option pizza">
-                          <div class="icon"></div>
-                          <p>3X3</p>
-                        </div>
-                    </li>
-                </ul>
-                <ul class="select_ul">
-                    <li>
-                        <div class="option pizza">
-                          <div class="icon"></div>
-                          <p>5X5</p>
-                        </div>
-                    </li>
-                    <li>
-                        <div class="option burger">
-                          <div class="icon"></div>
-                          <p>7X7</p>
-                        </div>  
-                    </li>
-                    <li>
-                        <div class="option ice">
-                          <div class="icon"></div>
-                          <p>9X9</p>
-                        </div>  
-                    </li>
-                    <li>
-                      <div class="option fries">
-                          <div class="icon"></div>
-                          <p>11X11</p>
-                        </div>
-                    </li>
-                </ul>
-            </div>
-          </div> -->
-          
     </body>
 </html>

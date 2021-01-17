@@ -1,0 +1,67 @@
+<html>
+    <head>
+        <title>Dilation Animation</title>
+        <style>
+            body {
+                margin: 0;
+            }
+            canvas {
+                width: 100%;
+                height: 100%;
+            }
+        </style>
+    </head>
+    <body>
+
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script src="js/three.js"></script>
+        <script src="js/OrbitControls.js"></script>
+        <script src="js/drawText.js"></script>
+        <script src="js/drawCube.js"></script>
+    
+        <!-- <script>
+            var imageArray = [
+                ['0','0','0','0','1'],
+                ['0','0','0','1','1'],
+                ['1','1','0','1','0'],
+                ['1','1','0','1','0'],
+                ['1','1','0','1','0']
+            ];
+
+            var kernelArray = [
+                ['0','1','0'],
+                ['0','1','0'],
+                ['0','1','0']
+            ]
+        </script> -->
+        
+        <script>
+            var myData = sessionStorage.getItem('myData');
+            var myDataArray = myData.split('|');
+            
+            console.log(myDataArray);
+            var kernelDim = parseInt(myDataArray[2]);
+            var m = parseInt(myDataArray[3]);
+            var n = parseInt(myDataArray[4]);
+            var kernelArray = new Array(kernelDim).fill(0).map(() => new Array(kernelDim).fill(0));
+            var k = 0;
+            for(i=0;i<kernelDim;i++){
+                for(j=0;j<kernelDim;j++){
+                    kernelArray[j][i] = myDataArray[0][k];
+                    k++;
+                }
+            }
+            var imageArray = new Array(m).fill(0).map(() => new Array(n).fill(0));
+            var k = 0;
+            for(i=0;i<n;i++){
+                for(j=0;j<m;j++){
+                    imageArray[j][i] = myDataArray[1][k];
+                    k++;
+                }
+            }
+            console.log(imageArray);
+        </script>
+
+        <script src="js/dilationAnimation.js"></script> 
+    </body>
+</html>

@@ -79,9 +79,12 @@ var updateKernelPosition = function(){
                     cubeObj[m+1-y+updatedPositiony][updatedPositionx+x].material.color.setHex( 0xfbdd11 );
                 else{
                     cubeObj[m+1-y+updatedPositiony][updatedPositionx+x].material.color.setHex( 0x4caf50 );
-                    drawText(updatedPositionx-0.18+m+4,n-updatedPositiony-0.2,0.1,'1',false,false);
+                    drawText(updatedPositionx-0.18+n+4,m-updatedPositiony-0.2,0.1,'1',false,false);
                     isUpdatedWithOne = true;
                 }
+            }
+            else{
+                cubeObj[m+1-y+updatedPositiony][updatedPositionx+x].material.color.setHex( 0x3a4f75 );
             }
             kernelObj[m+1-y][x].position.x=updatedPositionx+x;
             kernelObj[m+1-y][x].position.y=y-updatedPositiony;
@@ -93,8 +96,9 @@ var updateKernelPosition = function(){
             }
         }
     }
+    console.log(updatedPositionx+n+4,updatedPositiony);
     if(isUpdatedWithOne==false)
-        drawText(updatedPositionx-0.18+m+4,n-updatedPositiony-0.2,0.1,'0',false,false);
+        drawText(updatedPositionx-0.18+n+4,m-updatedPositiony-0.2,0.1,'0',false,false);
     updatedPositionx = (updatedPositionx+1)%(n+3-nk);
     updatedPositiony = updatedPositionx==0 ? ((updatedPositiony+1)<m+3-mk ? (updatedPositiony+1): 0): updatedPositiony;
 };
@@ -116,20 +120,6 @@ window.addEventListener('resize', function(){
     camera.aspect = width/height;
     camera.updateProjectionMatrix();
 });
-
-var imageArray = [
-    ['0','0','0','0','1'],
-    ['0','0','0','1','1'],
-    ['1','1','0','1','0'],
-    ['1','1','0','1','0'],
-    ['1','1','0','1','0']
-];
-
-var kernelArray = [
-    ['1','1','1'],
-    ['1','1','0'],
-    ['0','1','0']
-]
 
 var m = imageArray.length;
 var n = imageArray[0].length;
@@ -174,5 +164,5 @@ var animationLoop = function(){
     update();
     render();
 };
-setInterval(updateKernelPosition, 3000);
+setInterval(updateKernelPosition, 1000);
 animationLoop();
