@@ -1,0 +1,178 @@
+// for showing the frame rate, ram usage
+(function(){var script=document.createElement('script');script.onload=function(){var stats=new Stats();document.body.appendChild(stats.dom);requestAnimationFrame(function loop(){stats.update();requestAnimationFrame(loop)});};script.src='//mrdoob.github.io/stats.js/build/stats.min.js';document.head.appendChild(script);})()
+
+var kernelObj = [];
+var kernelText = [];
+var cubeObj = [];
+var resultObj = [];
+
+var drawImage = function(){
+    for(y=m;y>0;y--){
+        var resultTempObj = [];
+        for(x=n+4;x<2*n+4;x++){
+            var cube = drawCube(x,y,0,0x292929);
+            // drawText(x-0.18,y-0.2,0.1,imageArray[m-y][x-n-4],false,false);
+            resultTempObj.push(cube);
+        }
+        resultObj.push(resultTempObj);
+    }
+};
+
+var drawPaddedImage = function(){
+    for(y=m+1;y>=0;y--){
+        var cubeTempObj = [];
+        for(x=0;x<n+2;x++){
+            if(x==0 || y==0 || x==n+1 || y==m+1){
+                var colorOfCube = 0x696969;
+            }
+            else{
+                colorOfCube = 0x292929;
+            }
+            var cube = drawCube(x,y,0,colorOfCube);
+            drawText(x-0.18,y-0.2,0.1,paddedImageArray[m+1-y][x],false,false);
+            cubeTempObj.push(cube);
+        }
+        cubeObj.push(cubeTempObj);
+    }
+};
+
+var drawKernel = function(basex,basey){
+    for(y=m+1;y>=m-mk+2;y--){
+        var kernelTempObj = [];
+        for(x=0;x<nk;x++){
+            if(kernelArray[m+1-y][x]=='1')
+                var colorOfCube = 0xfbdd11;
+            else
+                colorOfCube = 0x292929;
+            var cube = drawCube(x+basex,y+basey,3,colorOfCube);
+            var content = drawText(x+basex-0.18,y+basey-0.2,3.1,kernelArray[m+1-y][x],true,x==(nk-1));
+            kernelTempObj.push(cube);
+        }
+        kernelObj.push(kernelTempObj);
+    }
+};
+
+var colorTheCubeToDefault = function(){
+    for(y=m+1;y>=0;y--){
+        for(x=0;x<n+2;x++){
+            if(x==0 || y==0 || x==n+1 || y==m+1){
+                var colorOfCube = 0x696969;
+            }
+            else{
+                colorOfCube = 0x292929;
+            }
+            cubeObj[m+1-y][x].material.color.setHex( colorOfCube);
+        }
+    }
+}
+
+var updatedPositionx=0;
+var updatedPositiony=0;
+
+var updateKernelPosition = function(){
+    var isUpdatedWithOne = false;
+    colorTheCubeToDefault();
+    for(y=m+1;y>=m-mk+2;y--){
+        for(x=0;x<nk;x++){
+            if(kernelArray[m+1-y][x]=='1'){
+                if(paddedImageArray[m+1-y+updatedPositiony][updatedPositionx+x]=='0')
+                    cubeObj[m+1-y+updatedPositiony][updatedPositionx+x].material.color.setHex( 0xfbdd11 );
+                else{
+                    cubeObj[m+1-y+updatedPositiony][updatedPositionx+x].material.color.setHex( 0x4caf50 );
+                    drawText(updatedPositionx-0.18+m+4,n-updatedPositiony-0.2,0.1,'1',false,false);
+                    isUpdatedWithOne = true;
+                }
+            }
+            kernelObj[m+1-y][x].position.x=updatedPositionx+x;
+            kernelObj[m+1-y][x].position.y=y-updatedPositiony;
+            try{
+                kernelText[m+1-y][x].position.x=updatedPositionx+x-0.18;
+                kernelText[m+1-y][x].position.y=y-0.2-updatedPositiony;
+            }catch(err){
+                console.log('textHasNotInitialized');
+            }
+        }
+    }
+    if(isUpdatedWithOne==false)
+        drawText(updatedPositionx-0.18+m+4,n-updatedPositiony-0.2,0.1,'0',false,false);
+    updatedPositionx = (updatedPositionx+1)%(n+3-nk);
+    updatedPositiony = updatedPositionx==0 ? ((updatedPositiony+1)<m+3-mk ? (updatedPositiony+1): 0): updatedPositiony;
+};
+
+
+
+var scene = new THREE.Scene();
+scene.background = new THREE.Color( 0xFFFFFF );
+var camera = new THREE.PerspectiveCamera( 75, window.innerWidth/window.innerHeight, 0.1, 1000);
+
+var renderer = new THREE.WebGLRenderer();
+renderer.setSize( window.innerWidth, window.innerHeight);
+document.body.appendChild( renderer.domElement);
+
+window.addEventListener('resize', function(){
+    var width = window.innerWidth;
+    var height = window.innerHeight;
+    renderer.setSize( width, height);
+    camera.aspect = width/height;
+    camera.updateProjectionMatrix();
+});
+
+var imageArray = [
+    ['0','0','0','0','1'],
+    ['0','0','0','1','1'],
+    ['1','1','0','1','0'],
+    ['1','1','0','1','0'],
+    ['1','1','0','1','0']
+];
+
+var kernelArray = [
+    ['1','1','1'],
+    ['1','1','0'],
+    ['0','1','0']
+]
+
+var m = imageArray.length;
+var n = imageArray[0].length;
+
+var mk = kernelArray.length;
+var nk = kernelArray[0].length;
+
+var paddedImageArray = new Array(m+2).fill(0).map(() => new Array(n+2).fill(0))
+
+for(i=0;i<m+2;i++){
+    for(j=0;j<n+2;j++){
+        if(i==0 || j==0 || i==m+1 || j==n+1){
+            paddedImageArray[i][j]='0';
+        }
+        else{
+            paddedImageArray[i][j]=imageArray[i-1][j-1];
+        }
+    }
+}
+
+var controls = new THREE.OrbitControls(camera, renderer.domElement);
+
+drawImage();
+drawPaddedImage();
+
+drawKernel(-100,0);
+camera.position.z = 10;
+
+// animation logic
+var update = function(){
+    
+};
+
+// draw scene
+var render = function(){
+    renderer.render(scene, camera);
+};
+
+// run animation loop {update, render, repeat}
+var animationLoop = function(){
+    requestAnimationFrame( animationLoop );
+    update();
+    render();
+};
+setInterval(updateKernelPosition, 3000);
+animationLoop();
