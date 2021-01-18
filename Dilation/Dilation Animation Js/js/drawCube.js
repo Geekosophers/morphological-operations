@@ -1,8 +1,8 @@
-const texture = new THREE.TextureLoader().load( 'assets/frame.PNG' );
+// const texture = new THREE.TextureLoader().load( 'assets/frame.PNG' );
 // create the shape
 var geometry = new THREE.BoxGeometry( 0.9, 0.9, 0.1);
 
-const material = new THREE.MeshBasicMaterial( { map: texture } );
+// const material = new THREE.MeshBasicMaterial( { map: texture } );
 var drawCube = function(xpos,ypos,zpos){
     // material, color and image texture
     // var material = new THREE.MeshBasicMaterial( { color: 0xe14e87, wireframe: false } );

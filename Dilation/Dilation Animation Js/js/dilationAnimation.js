@@ -4,32 +4,33 @@
 var kernelObj = [];
 var kernelText = [];
 var cubeObj = [];
-var resultObj = [];
 
 var drawImage = function(){
-    for(y=m;y>0;y--){
-        var resultTempObj = [];
-        for(x=n+4;x<2*n+4;x++){
+    for(y=m+Math.floor(kernelArray.length/2)-1;y>=Math.floor(kernelArray.length/2);y--){
+        for(x=n+nk;x<2*n+nk;x++){
             var cube = drawCube(x,y,0,0x292929);
-            // drawText(x-0.18,y-0.2,0.1,imageArray[m-y][x-n-4],false,false);
-            resultTempObj.push(cube);
         }
-        resultObj.push(resultTempObj);
     }
 };
 
 var drawPaddedImage = function(){
-    for(y=m+1;y>=0;y--){
+    for(y=m+2*Math.floor(mk/2)-1;y>=0;y--){
         var cubeTempObj = [];
-        for(x=0;x<n+2;x++){
-            if(x==0 || y==0 || x==n+1 || y==m+1){
-                var colorOfCube = 0x696969;
+        for(x=0;x<n+2*Math.floor(nk/2);x++){
+            // 3 - [0]      [paddedImageArray[0].length-1]                                                  [paddedImageArray.length-1]
+            // 5 - [0,1]    [paddedImageArray[0].length-1,paddedImageArray[0]-2]                            [paddedImageArray.length-1,paddedImageArray.length-2]
+            // 7 - [0,1,2]  [paddedImageArray[0].length-1,paddedImageArray[0]-2,paddedImageArray[0]-3]      [paddedImageArray.length-1,paddedImageArray.length-2,paddedImageArray.length-3]
+
+            var colorOfCube = 0x292929;
+            
+            for(i=0;i<Math.floor(kernelArray.length/2);i++){
+                if(x==i || y==i || x==paddedImageArray[0].length-(i+1) || y==paddedImageArray.length-(i+1)){
+                    var colorOfCube = 0x696969;
+                }
             }
-            else{
-                colorOfCube = 0x292929;
-            }
+            
             var cube = drawCube(x,y,0,colorOfCube);
-            drawText(x-0.18,y-0.2,0.1,paddedImageArray[m+1-y][x],false,false);
+            drawText(x-0.18,y-0.2,0.1,paddedImageArray[m+2*Math.floor(mk/2)-1-y][x],false,false);
             cubeTempObj.push(cube);
         }
         cubeObj.push(cubeTempObj);
@@ -53,15 +54,16 @@ var drawKernel = function(basex,basey){
 };
 
 var colorTheCubeToDefault = function(){
-    for(y=m+1;y>=0;y--){
-        for(x=0;x<n+2;x++){
-            if(x==0 || y==0 || x==n+1 || y==m+1){
-                var colorOfCube = 0x696969;
+    for(y=m+2*Math.floor(mk/2)-1;y>=0;y--){
+        for(x=0;x<n+2*Math.floor(nk/2);x++){
+            var colorOfCube = 0x292929;
+            
+            for(i=0;i<Math.floor(kernelArray.length/2);i++){
+                if(x==i || y==i || x==paddedImageArray[0].length-(i+1) || y==paddedImageArray.length-(i+1)){
+                    var colorOfCube = 0x696969;
+                }
             }
-            else{
-                colorOfCube = 0x292929;
-            }
-            cubeObj[m+1-y][x].material.color.setHex( colorOfCube);
+            cubeObj[m+2*Math.floor(mk/2)-1-y][x].material.color.setHex( colorOfCube);
         }
     }
 }
@@ -79,7 +81,7 @@ var updateKernelPosition = function(){
                     cubeObj[m+1-y+updatedPositiony][updatedPositionx+x].material.color.setHex( 0xfbdd11 );
                 else{
                     cubeObj[m+1-y+updatedPositiony][updatedPositionx+x].material.color.setHex( 0x4caf50 );
-                    drawText(updatedPositionx-0.18+n+4,m-updatedPositiony-0.2,0.1,'1',false,false);
+                    drawText(updatedPositionx-0.18+n+nk,m+Math.floor(kernelArray.length/2)-1-updatedPositiony-0.2,0.1,'1',false,false);
                     isUpdatedWithOne = true;
                 }
             }
@@ -96,13 +98,11 @@ var updateKernelPosition = function(){
             }
         }
     }
-    console.log(updatedPositionx+n+4,updatedPositiony);
     if(isUpdatedWithOne==false)
-        drawText(updatedPositionx-0.18+n+4,m-updatedPositiony-0.2,0.1,'0',false,false);
-    updatedPositionx = (updatedPositionx+1)%(n+3-nk);
-    updatedPositiony = updatedPositionx==0 ? ((updatedPositiony+1)<m+3-mk ? (updatedPositiony+1): 0): updatedPositiony;
+        drawText(updatedPositionx-0.18+n+nk,m+Math.floor(kernelArray.length/2)-1-updatedPositiony-0.2,0.1,'0',false,false);
+    updatedPositionx = (updatedPositionx+1)%(paddedImageArray[0].length-kernelArray[0].length+1);
+    updatedPositiony = updatedPositionx==0 ? ((updatedPositiony+1)<(paddedImageArray.length-kernelArray.length+1) ? (updatedPositiony+1): 0): updatedPositiony;
 };
-
 
 
 var scene = new THREE.Scene();
@@ -127,16 +127,17 @@ var n = imageArray[0].length;
 var mk = kernelArray.length;
 var nk = kernelArray[0].length;
 
-var paddedImageArray = new Array(m+2).fill(0).map(() => new Array(n+2).fill(0))
+var paddedImageArray = new Array(m+2*Math.floor(mk/2)).fill(0).map(() => new Array(n+2*Math.floor(nk/2)).fill(0));
 
-for(i=0;i<m+2;i++){
-    for(j=0;j<n+2;j++){
-        if(i==0 || j==0 || i==m+1 || j==n+1){
-            paddedImageArray[i][j]='0';
+for(i=0;i<m+2*Math.floor(mk/2);i++){
+    a: for(j=0;j<n+2*Math.floor(nk/2);j++){
+        for(k=0;k<Math.floor(kernelArray.length/2);k++){
+            if(i==k || j==k || i==paddedImageArray.length-(k+1) || j==paddedImageArray[0].length-(k+1)){
+                paddedImageArray[i][j]='0';
+                continue a;
+            }
         }
-        else{
-            paddedImageArray[i][j]=imageArray[i-1][j-1];
-        }
+        paddedImageArray[i][j]=imageArray[i-(Math.floor(kernelArray.length/2))][j-(Math.floor(kernelArray.length/2))];
     }
 }
 
