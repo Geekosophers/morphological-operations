@@ -18,32 +18,11 @@
         <script src="js/OrbitControls.js"></script>
         <script src="js/drawText.js"></script>
         <script src="js/drawCube.js"></script>
-    
-        <script>
-            var imageArray = [
-                ['0','0','0','0','1'],
-                ['0','0','0','1','1'],
-                ['1','1','0','1','0'],
-                ['1','1','0','1','0'],
-                ['1','1','0','1','0']
-            ];
-
-            var kernelArray = [
-                ['0','1','0','0','1','0','0'],
-                ['0','1','0','0','0','0','0'],
-                ['0','1','0','1','1','0','0'],
-                ['0','1','0','1','1','0','0'],
-                ['0','1','0','1','1','0','0'],
-                ['0','1','0','1','1','0','0'],
-                ['0','1','0','1','1','0','0']
-            ]
-        </script>
         
-        <!-- <script>
+        <script>
             var myData = sessionStorage.getItem('myData');
             var myDataArray = myData.split('|');
             
-            // console.log(myDataArray);
             var kernelDim = parseInt(myDataArray[2]);
             var m = parseInt(myDataArray[3]);
             var n = parseInt(myDataArray[4]);
@@ -63,8 +42,7 @@
                     k++;
                 }
             }
-            // console.log(imageArray);
-        </script> -->
+        </script>
 
         <script src="js/dilationAnimation.js"></script> 
     </body>

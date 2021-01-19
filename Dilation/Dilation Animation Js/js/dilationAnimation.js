@@ -17,12 +17,7 @@ var drawPaddedImage = function(){
     for(y=m+2*Math.floor(mk/2)-1;y>=0;y--){
         var cubeTempObj = [];
         for(x=0;x<n+2*Math.floor(nk/2);x++){
-            // 3 - [0]      [paddedImageArray[0].length-1]                                                  [paddedImageArray.length-1]
-            // 5 - [0,1]    [paddedImageArray[0].length-1,paddedImageArray[0]-2]                            [paddedImageArray.length-1,paddedImageArray.length-2]
-            // 7 - [0,1,2]  [paddedImageArray[0].length-1,paddedImageArray[0]-2,paddedImageArray[0]-3]      [paddedImageArray.length-1,paddedImageArray.length-2,paddedImageArray.length-3]
-
             var colorOfCube = 0x292929;
-            
             for(i=0;i<Math.floor(kernelArray.length/2);i++){
                 if(x==i || y==i || x==paddedImageArray[0].length-(i+1) || y==paddedImageArray.length-(i+1)){
                     var colorOfCube = 0x696969;
@@ -74,25 +69,25 @@ var updatedPositiony=0;
 var updateKernelPosition = function(){
     var isUpdatedWithOne = false;
     colorTheCubeToDefault();
-    for(y=m+1;y>=m-mk+2;y--){
+    for(y=paddedImageArray.length-1;y>=paddedImageArray.length-1-mk+1;y--){
         for(x=0;x<nk;x++){
-            if(kernelArray[m+1-y][x]=='1'){
-                if(paddedImageArray[m+1-y+updatedPositiony][updatedPositionx+x]=='0')
-                    cubeObj[m+1-y+updatedPositiony][updatedPositionx+x].material.color.setHex( 0xfbdd11 );
+            if(kernelArray[paddedImageArray.length-1-y][x]=='1'){
+                if(paddedImageArray[paddedImageArray.length-1-y+updatedPositiony][updatedPositionx+x]=='0')
+                    cubeObj[paddedImageArray.length-1-y+updatedPositiony][updatedPositionx+x].material.color.setHex( 0xfbdd11 );
                 else{
-                    cubeObj[m+1-y+updatedPositiony][updatedPositionx+x].material.color.setHex( 0x4caf50 );
+                    cubeObj[paddedImageArray.length-1-y+updatedPositiony][updatedPositionx+x].material.color.setHex( 0x4caf50 );
                     drawText(updatedPositionx-0.18+n+nk,m+Math.floor(kernelArray.length/2)-1-updatedPositiony-0.2,0.1,'1',false,false);
                     isUpdatedWithOne = true;
                 }
             }
             else{
-                cubeObj[m+1-y+updatedPositiony][updatedPositionx+x].material.color.setHex( 0x3a4f75 );
+                cubeObj[paddedImageArray.length-1-y+updatedPositiony][updatedPositionx+x].material.color.setHex( 0x3a4f75 );
             }
-            kernelObj[m+1-y][x].position.x=updatedPositionx+x;
-            kernelObj[m+1-y][x].position.y=y-updatedPositiony;
+            kernelObj[paddedImageArray.length-1-y][x].position.x=updatedPositionx+x;
+            kernelObj[paddedImageArray.length-1-y][x].position.y=y-updatedPositiony;
             try{
-                kernelText[m+1-y][x].position.x=updatedPositionx+x-0.18;
-                kernelText[m+1-y][x].position.y=y-0.2-updatedPositiony;
+                kernelText[paddedImageArray.length-1-y][x].position.x=updatedPositionx+x-0.18;
+                kernelText[paddedImageArray.length-1-y][x].position.y=y-0.2-updatedPositiony;
             }catch(err){
                 console.log('textHasNotInitialized');
             }
