@@ -1,54 +1,99 @@
 <html>
     <head>
         <title>Dilation Animation</title>
-        <style>
-            body {
-                margin: 0;
-            }
-            canvas {
-                width: 100%;
-                height: 100%;
-            }
-        </style>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="preconnect" href="https://fonts.gstatic.com">
+        <link href="https://fonts.googleapis.com/css2?family=Lato&display=swap" rel="stylesheet">
+        <link rel="stylesheet" href="css/styles.css">
     </head>
 
     <body>
         <script src="https://cdn.jsdelivr.net/npm/p5@1.2.0/lib/p5.min.js"></script>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
         <script src="js/sketch.js"></script>
-        
-        <div>
-            <div>Kernel Dimensions</div>
-            <select name="mk-nk-value" property="disease_name" size="1" onchange="onchange_action();">
-                <option selected="selected"></option> 
-                <option value="3">3x3</option>
-                <option value="5">5x5</option>
-                <option value="7">7x7</option>
-            </select>
+
+        <div class="base-class">
+            <div style="display: flex;flex-direction: row;">
+                <div style="display: inline;">Kernel Dimensions</div>
+                <div>
+                    <select name="mk-nk-value" class="select-css" onchange="onchange_action();">
+                        <option selected="selected"></option> 
+                        <option value="3">3x3</option>
+                        <option value="5">5x5</option>
+                        <option value="7">7x7</option>
+                    </select>
+                </div>
+            </div>
+    
+            <div style="display: flex;flex-direction: row;">
+                <div>Image Dimensions</div>
+                <div>
+                    <select name="m-value" class="select-css" onchange="onchange_action();">
+                        <option selected="selected"></option> 
+                        <option value="3">3</option>
+                        <option value="5">5</option>
+                        <option value="7">7</option>
+                    </select>
+                </div>
+                <div style="padding: 0 5px;">x</div>
+                <div>
+                    <select name="n-value" class="select-css" onchange="onchange_action();">
+                        <option selected="selected"></option> 
+                        <option value="3">3</option>
+                        <option value="5">5</option>
+                        <option value="7">7</option>
+                    </select>
+                </div>
+            </div>  
         </div>
 
-        <div>
-            <div>Image Dimensions</div>
-            <select name="m-value" property="disease_name" size="1" onchange="onchange_action();">
-                <option selected="selected"></option> 
-                <option value="3">3</option>
-                <option value="5">5</option>
-                <option value="7">7</option>
-            </select>
-            <span>X</span>
-            <select name="n-value" property="disease_name" size="1" onchange="onchange_action();">
-                <option selected="selected"></option> 
-                <option value="3">3</option>
-                <option value="5">5</option>
-                <option value="7">7</option>
-            </select>
-        </div>
+        <!-- <div style="display: flex; flex-direction: column;justify-content: space-around; background-color: e14e87;">
+            
+            <div class="content">
+                <div style="display: flex;flex-direction: row;justify-content: center; margin: 0 40px;">
+                    <div style="padding: 0 10px;">Kernel Dimensions</div>
+                    <div>
+                        <select name="mk-nk-value" class="select-css" onchange="onchange_action();">
+                            <option selected="selected"></option> 
+                            <option value="3">3x3</option>
+                            <option value="5">5x5</option>
+                            <option value="7">7x7</option>
+                        </select>
+                    </div>
+                </div>
+                <div style="display: flex;flex-direction: row;justify-content: center;">
+                    <div style="padding: 0 10px;">Image Dimensions</div>
+                    <div>
+                        <select name="m-value" class="select-css" onchange="onchange_action();">
+                            <option selected="selected"></option> 
+                            <option value="3">3</option>
+                            <option value="5">5</option>
+                            <option value="7">7</option>
+                        </select>
+                    </div>
+                    <div style="padding: 0 5px;">x</div>
+                    <div>
+                        <select name="n-value" class="select-css" onchange="onchange_action();">
+                            <option selected="selected"></option> 
+                            <option value="3">3</option>
+                            <option value="5">5</option>
+                            <option value="7">7</option>
+                        </select>
+                    </div>
+                </div>    
+            </div>
 
-        <button onclick="myFunction()">Start</button>
-        <a href="animation.html?var1=42" target="_self"> Link </a>
-        <button id='store'>Get</button>
+            <div style="display: flex;flex-direction: row; justify-content: center;padding-bottom: 1.5em;">
+                <button class="btn btn-6 btn-6d" onclick="myFunction()">Start Animation</button>
+            </div>
+
+        </div> -->
 
         <script>
+            var startAnimation = function(){
+                window.open("animation.html");
+            }
+
             var myFunction = function(){
                 kernelArray = '';
                 imageArray = '';
@@ -64,12 +109,8 @@
                 var n = document.getElementsByName("n-value")[0];
                 var mydata = kernelArray + '|' + imageArray + '|' + kernelValue.value + '|' + m.value + '|' + n.value;
                 sessionStorage.setItem('myData', mydata);
+                startAnimation();
             }
-            
-            $('#store').on('click', function(){
-                var myArray = sessionStorage.getItem('myData');
-                console.log(myArray);
-            });
         </script>
     </body>
 </html>
