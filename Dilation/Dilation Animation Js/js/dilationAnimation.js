@@ -138,15 +138,18 @@ for(i=0;i<m+2*Math.floor(mk/2);i++){
 
 var controls = new THREE.OrbitControls(camera, renderer.domElement);
 
+controls.target = new THREE.Vector3(0, 0, 0);
+
 drawImage();
 drawPaddedImage();
 
 drawKernel(-100,0);
-camera.position.z = 10;
+camera.position.y = -5 ;
+camera.position.z = 5;
 
 // animation logic
 var update = function(){
-    
+    controls.update();
 };
 
 // draw scene
