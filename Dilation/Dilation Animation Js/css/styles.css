@@ -1,24 +1,51 @@
-body {
-    margin: 0;
-    font-family: 'Lato', sans-serif;
-    font-size: 1.4rem;
-    /* color: #ffffff; */
-    background-color: white;
+* {
+  box-sizing: border-box;
 }
+
+html {
+  font-size: 62.5%;
+}
+
+body {
+  margin: 0;
+  font-family: 'Lato', sans-serif;
+  /* font-size: 1.4rem; */
+  font-size: 1.8rem;
+  line-height: 1.6;
+  color: #ffffff;
+}
+
+button {
+  cursor: pointer;
+}
+
+button:disabled {
+  cursor: default;
+}
+
+.is-active {
+  font-weight: bold;
+}
+
 canvas {
-    width: 100%;
-    height: 100%;
+    width: 100vw;
+    height: 100vh;
 }
 
 .base-class{
   display: flex;
   flex-direction: row;
+  background-color: #e14e87;
+  padding: 3rem;
+  justify-content: space-around;
 }
 
 @media only screen and (max-width: 600px) {
   .base-class {
     display: flex;
-  flex-direction: column;
+    flex-direction: column;
+    justify-content: center;
+    padding: 1.5rem 0.5rem;
   }
 }
 
@@ -41,19 +68,19 @@ canvas {
 /* class applies to select element itself, not a wrapper element */
 .select-css {
     display: block;
-    font-size: 1.2rem;
+    font-size: 1.8rem;
     /* font-family: sans-serif; */
     /* font-weight: 700; */
     /* color: #444; */
-    line-height: 1.3;
+    /* line-height: 1.6; */
     /* padding: .6em 1.4em .5em .8em; */
-    width: 5rem;
+    width: 7rem;
     max-width: 100%; /* useful when width is set to anything other than 100% */
     box-sizing: border-box;
     /* margin: 0 2em; */
-    border: 1px solid #aaa;
+    border: 1px solid #4b5399;
     box-shadow: 0 1px 0 1px rgba(0,0,0,.04);
-    border-radius: .5em;
+    /* border-radius: .5em; */
     -moz-appearance: none;
     -webkit-appearance: none;
     appearance: none;
@@ -103,9 +130,9 @@ canvas {
 /* Button 6d */
 .btn-6d {
     border: 2px solid #e14e87;
-    padding: 0.5em;
+    padding: 1.5rem;
     color: #ffffff;
-    font-size: 0.8em;
+    font-size: 1.5rem;
     background: #4b5399;
 }
 

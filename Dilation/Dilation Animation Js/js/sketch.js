@@ -21,17 +21,37 @@ function setup(kernelValue,mValue,nValue) {
     let mk = parseInt(kernelValue);
     let nk = parseInt(kernelValue);
 
-    for (let i = 0; i < nk; i++) {
-        for(let j = 0; j< mk; j++){
-            let b = new Square(i*(length), j*(length), length, i*length+(length/3),j*length+(2*length/3),'0');
-            kernelSquares.push(b);
+    if(height>width){
+        length = height/20;  
+        
+        for (let i = 1; i < nk+1; i++) {
+            for(let j = 1; j< mk+1; j++){
+                let b = new Square(i*(length), j*(length), length, i*length+(length/3),j*length+(2*length/3),'0',height/40);
+                kernelSquares.push(b);
+            }
         }
-    }
 
-    for (let i = nk+1; i < nk+1+n; i++) {
-        for(let j = 0; j< m; j++){
-            let b = new Square(i*(length), j*(length), length, i*length+(length/3),j*length+(2*length/3),'0');
-            imageSquares.push(b);
+        for (let i = 1; i < n+1; i++) {
+            for(let j = mk+2; j< m+mk+2; j++){
+                let b = new Square(i*(length), j*(length), length, i*length+(length/3),j*length+(2*length/3),'0',height/40);
+                imageSquares.push(b);
+            }
+        }
+        
+    }
+    else{
+        for (let i = 1; i < nk+1; i++) {
+            for(let j = 1; j< mk+1; j++){
+                let b = new Square(i*(length), j*(length), length, i*length+(length/3),j*length+(2*length/3),'0',width/40);
+                kernelSquares.push(b);
+            }
+        }
+    
+        for (let i = nk+2; i < nk+2+n; i++) {
+            for(let j = 1; j< m+1; j++){
+                let b = new Square(i*(length), j*(length), length, i*length+(length/3),j*length+(2*length/3),'0',width/40);
+                imageSquares.push(b);
+            }
         }
     }
 }
@@ -46,7 +66,7 @@ function mousePressed() {
 }
 
 function draw() {
-    background(255, 255, 255);
+    background('#4b5399');
     for (let i = 0; i < kernelSquares.length; i++) {
         kernelSquares[i].show();
     }
@@ -56,13 +76,14 @@ function draw() {
 }
 
 class Square {
-    constructor(x, y, length, textx, texty, textValue) {
+    constructor(x, y, length, textx, texty, textValue, textSize) {
         this.x = x;
         this.y = y;
         this.length = length;
         this.textx = textx;
         this.texty = texty;
         this.textValue = textValue;
+        this.textSize = textSize;
         this.brightness = 0;
     }
 
@@ -71,18 +92,14 @@ class Square {
             this.brightness = this.brightness!=255 ? 255 : 0;
             this.textValue = this.textValue=='0' ? '1' : '0';
         }
-        // use in future testing of double click
-        // if ((navigator.userAgent.match(/iPhone/i)) || (navigator.userAgent.match(/iPod/i))){ 
-        //         console.log('apple');
-        // }
     }
 
     show() {
         stroke(0);
-        strokeWeight(4);
+        strokeWeight(2);
         fill(this.brightness, 125);
         square(this.x,this.y,this.length);
-        textSize(width/40);
+        textSize(this.textSize);
         strokeWeight(1);
         fill(0);
         text(this.textValue,this.textx,this.texty);

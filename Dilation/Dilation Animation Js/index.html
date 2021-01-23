@@ -13,8 +13,9 @@
         <script src="js/sketch.js"></script>
 
         <div class="base-class">
-            <div style="display: flex;flex-direction: row;">
-                <div style="display: inline;">Kernel Dimensions</div>
+
+            <div style="display: flex;flex-direction: row;padding: 1.5rem;">
+                <div style="padding-right: 0.5rem;">Kernel Dimensions</div>
                 <div>
                     <select name="mk-nk-value" class="select-css" onchange="onchange_action();">
                         <option selected="selected"></option> 
@@ -25,8 +26,8 @@
                 </div>
             </div>
     
-            <div style="display: flex;flex-direction: row;">
-                <div>Image Dimensions</div>
+            <div style="display: flex;flex-direction: row;padding: 1.5rem;">
+                <div style="padding-right: 0.5rem;">Image Dimensions</div>
                 <div>
                     <select name="m-value" class="select-css" onchange="onchange_action();">
                         <option selected="selected"></option> 
@@ -44,50 +45,13 @@
                         <option value="7">7</option>
                     </select>
                 </div>
-            </div>  
+            </div> 
+
+            <div style="padding: 0 1.5rem;">
+                <button class="btn-6 btn-6d" onclick="myFunction()">Start Animation</button>
+            </div>
+             
         </div>
-
-        <!-- <div style="display: flex; flex-direction: column;justify-content: space-around; background-color: e14e87;">
-            
-            <div class="content">
-                <div style="display: flex;flex-direction: row;justify-content: center; margin: 0 40px;">
-                    <div style="padding: 0 10px;">Kernel Dimensions</div>
-                    <div>
-                        <select name="mk-nk-value" class="select-css" onchange="onchange_action();">
-                            <option selected="selected"></option> 
-                            <option value="3">3x3</option>
-                            <option value="5">5x5</option>
-                            <option value="7">7x7</option>
-                        </select>
-                    </div>
-                </div>
-                <div style="display: flex;flex-direction: row;justify-content: center;">
-                    <div style="padding: 0 10px;">Image Dimensions</div>
-                    <div>
-                        <select name="m-value" class="select-css" onchange="onchange_action();">
-                            <option selected="selected"></option> 
-                            <option value="3">3</option>
-                            <option value="5">5</option>
-                            <option value="7">7</option>
-                        </select>
-                    </div>
-                    <div style="padding: 0 5px;">x</div>
-                    <div>
-                        <select name="n-value" class="select-css" onchange="onchange_action();">
-                            <option selected="selected"></option> 
-                            <option value="3">3</option>
-                            <option value="5">5</option>
-                            <option value="7">7</option>
-                        </select>
-                    </div>
-                </div>    
-            </div>
-
-            <div style="display: flex;flex-direction: row; justify-content: center;padding-bottom: 1.5em;">
-                <button class="btn btn-6 btn-6d" onclick="myFunction()">Start Animation</button>
-            </div>
-
-        </div> -->
 
         <script>
             var startAnimation = function(){
