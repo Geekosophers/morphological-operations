@@ -1,15 +1,18 @@
 import numpy as np
 import cv2
 
-filepath = 'Dilation/assets/dilation7x7sample2.jpg'
-img = cv2.imread(filepath,0)
+# Comment lines 10 to 15 and uncomment lines 5 and 6 to perform dialtion on a real image.
+# filepath = 'Dilation/assets/dilation7x7sample2.jpg'
+# img = cv2.imread(filepath,0)
 
-# img = np.array([[0,   0,   0, 0,   0],
-#                 [0,   0, 255, 0, 255],
-#                 [0,   0,   0, 0, 255],
-#                 [0,   0, 255, 0,   0],
-#                 [0,   0, 255, 0, 255],
-#                 [255, 0,   0, 0,   0]], np.uint8)
+# In binary sometimes we express a black pixel and a white pixel as 0 and 1 respectively.
+# In the following code 0 denotes a black pixel and 255 denotes a white pixel.
+img = np.array([[0,   0,   0, 0,   0],
+                [0,   0, 255, 0, 255],
+                [0,   0,   0, 0, 255],
+                [0,   0, 255, 0,   0],
+                [0,   0, 255, 0, 255],
+                [255, 0,   0, 0,   0]], np.uint8)
 
 kernel = np.array([[0, 1, 0, 0, 0],
                    [1, 0, 1, 0, 0],
@@ -40,9 +43,11 @@ cv2.imwrite(outpath,dilation)
 
 # Padded Image for 5X5 kernel:
 # 0 0 0 0 0 0 0 0 0
+# 0 0 0 0 0 0 0 0 0
 # 0 0 1 0 1 0 0 0 0
 # 0 0 1 1 0 0 1 0 0
 # 0 0 0 0 1 1 0 0 0
+# 0 0 0 0 0 0 0 0 0
 # 0 0 0 0 0 0 0 0 0
 
 ##################################################################
