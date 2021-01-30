@@ -6,13 +6,13 @@ import cv2
 # img = cv2.imread(filepath,0)
 
 # In binary sometimes we express a black pixel and a white pixel as 0 and 1 respectively.
-# In the following code 0 denotes a black pixel and 255 denotes a white pixel.
-img = np.array([[0,   0,   0, 0,   0],
-                [0,   0, 255, 0, 255],
-                [0,   0,   0, 0, 255],
-                [0,   0, 255, 0,   0],
-                [0,   0, 255, 0, 255],
-                [255, 0,   0, 0,   0]], np.uint8)
+# In the following code 0 denotes a black pixel and 255 denotes a white pixel. Read observations at the bottom to get full idea.
+img = np.array([[ 0, 0, 0, 0, 0],
+                [ 0, 0, 1, 0, 1],
+                [ 0, 0, 0, 0, 1],
+                [ 0, 0, 1, 0, 0],
+                [ 0, 0, 1, 0, 1],
+                [ 1, 0, 0, 0, 0]], np.uint8)
 
 kernel = np.array([[0, 1, 0, 0, 0],
                    [1, 0, 1, 0, 0],
@@ -49,5 +49,11 @@ cv2.imwrite(outpath,dilation)
 # 0 0 0 0 1 1 0 0 0
 # 0 0 0 0 0 0 0 0 0
 # 0 0 0 0 0 0 0 0 0
+
+# Observations:
+# The 0s and 1s in the numpy array 'img' does not denote white and black. 
+# It represents the actual pixel value in grayscale range 0-255.
+# To output the array in the form of the image will result in an image showing pixel value 1 which appears to be black.
+# To get black and white image output, replace 1 with 255 in 'img' array
 
 ##################################################################
