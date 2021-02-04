@@ -67,38 +67,68 @@ var updatedPositionx=0;
 var updatedPositiony=0;
 
 var updateKernelPosition = function(){
-    var isUpdatedWithZero = false;
-    colorTheCubeToDefault();
-    for(y=paddedImageArray.length-1;y>=paddedImageArray.length-1-mk+1;y--){
-        for(x=0;x<nk;x++){
-            if(kernelArray[paddedImageArray.length-1-y][x]=='1'){
-                if(paddedImageArray[paddedImageArray.length-1-y+updatedPositiony][updatedPositionx+x]=='0'){
-                    cubeObj[paddedImageArray.length-1-y+updatedPositiony][updatedPositionx+x].material.color.setHex( 0xfbdd11 );
-                    isUpdatedWithZero = true;
+    if(imageType=='Binary'){
+        var isUpdatedWithZero = false;
+        colorTheCubeToDefault();
+        for(y=paddedImageArray.length-1;y>=paddedImageArray.length-1-mk+1;y--){
+            for(x=0;x<nk;x++){
+                if(kernelArray[paddedImageArray.length-1-y][x]=='1'){
+                    if(paddedImageArray[paddedImageArray.length-1-y+updatedPositiony][updatedPositionx+x]=='0'){
+                        cubeObj[paddedImageArray.length-1-y+updatedPositiony][updatedPositionx+x].material.color.setHex( 0xfbdd11 );
+                        isUpdatedWithZero = true;
+                    }
+                    else{
+                        cubeObj[paddedImageArray.length-1-y+updatedPositiony][updatedPositionx+x].material.color.setHex( 0x4caf50 );
+                    }
                 }
                 else{
-                    cubeObj[paddedImageArray.length-1-y+updatedPositiony][updatedPositionx+x].material.color.setHex( 0x4caf50 );
+                    cubeObj[paddedImageArray.length-1-y+updatedPositiony][updatedPositionx+x].material.color.setHex( 0x3a4f75 );
+                }
+                kernelObj[paddedImageArray.length-1-y][x].position.x=updatedPositionx+x;
+                kernelObj[paddedImageArray.length-1-y][x].position.y=y-updatedPositiony;
+                try{
+                    kernelText[paddedImageArray.length-1-y][x].position.x=updatedPositionx+x-0.18;
+                    kernelText[paddedImageArray.length-1-y][x].position.y=y-0.2-updatedPositiony;
+                }catch(err){
+                    console.log('textHasNotInitialized');
                 }
             }
-            else{
-                cubeObj[paddedImageArray.length-1-y+updatedPositiony][updatedPositionx+x].material.color.setHex( 0x3a4f75 );
-            }
-            kernelObj[paddedImageArray.length-1-y][x].position.x=updatedPositionx+x;
-            kernelObj[paddedImageArray.length-1-y][x].position.y=y-updatedPositiony;
-            try{
-                kernelText[paddedImageArray.length-1-y][x].position.x=updatedPositionx+x-0.18;
-                kernelText[paddedImageArray.length-1-y][x].position.y=y-0.2-updatedPositiony;
-            }catch(err){
-                console.log('textHasNotInitialized');
+        }
+        if(isUpdatedWithZero==true)
+            drawText(updatedPositionx-0.18+n+nk,m+Math.floor(kernelArray.length/2)-1-updatedPositiony-0.2,0.1,'0',false,false);
+        else
+            drawText(updatedPositionx-0.18+n+nk,m+Math.floor(kernelArray.length/2)-1-updatedPositiony-0.2,0.1,'1',false,false);
+        updatedPositionx = (updatedPositionx+1)%(paddedImageArray[0].length-kernelArray[0].length+1);
+        updatedPositiony = updatedPositionx==0 ? ((updatedPositiony+1)<(paddedImageArray.length-kernelArray.length+1) ? (updatedPositiony+1): 0): updatedPositiony;
+    }
+    else if(imageType=='Grayscale'){
+        var minValue = '9';
+        colorTheCubeToDefault();
+        for(y=paddedImageArray.length-1;y>=paddedImageArray.length-1-mk+1;y--){
+            for(x=0;x<nk;x++){
+                if(kernelArray[paddedImageArray.length-1-y][x]=='1'){
+                    var pixelValue = paddedImageArray[paddedImageArray.length-1-y+updatedPositiony][updatedPositionx+x];
+                    cubeObj[paddedImageArray.length-1-y+updatedPositiony][updatedPositionx+x].material.color.setHex( 0x4caf50 );
+                    minValue = minValue>pixelValue ? pixelValue : minValue ;
+                }
+                else{
+                    cubeObj[paddedImageArray.length-1-y+updatedPositiony][updatedPositionx+x].material.color.setHex( 0x3a4f75 );
+                }
+                kernelObj[paddedImageArray.length-1-y][x].position.x=updatedPositionx+x;
+                kernelObj[paddedImageArray.length-1-y][x].position.y=y-updatedPositiony;
+                try{
+                    kernelText[paddedImageArray.length-1-y][x].position.x=updatedPositionx+x-0.18;
+                    kernelText[paddedImageArray.length-1-y][x].position.y=y-0.2-updatedPositiony;
+                }catch(err){
+                    console.log('textHasNotInitialized');
+                }
             }
         }
+        console.log(minValue);
+        drawText(updatedPositionx-0.18+n+nk,m+Math.floor(kernelArray.length/2)-1-updatedPositiony-0.2,0.1,minValue,false,false);
+        updatedPositionx = (updatedPositionx+1)%(paddedImageArray[0].length-kernelArray[0].length+1);
+        updatedPositiony = updatedPositionx==0 ? ((updatedPositiony+1)<(paddedImageArray.length-kernelArray.length+1) ? (updatedPositiony+1): 0): updatedPositiony;
     }
-    if(isUpdatedWithZero==true)
-        drawText(updatedPositionx-0.18+n+nk,m+Math.floor(kernelArray.length/2)-1-updatedPositiony-0.2,0.1,'0',false,false);
-    else
-        drawText(updatedPositionx-0.18+n+nk,m+Math.floor(kernelArray.length/2)-1-updatedPositiony-0.2,0.1,'1',false,false);
-    updatedPositionx = (updatedPositionx+1)%(paddedImageArray[0].length-kernelArray[0].length+1);
-    updatedPositiony = updatedPositionx==0 ? ((updatedPositiony+1)<(paddedImageArray.length-kernelArray.length+1) ? (updatedPositiony+1): 0): updatedPositiony;
 };
 
 

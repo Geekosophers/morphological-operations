@@ -17,6 +17,17 @@
         <div class="base-class">
 
             <div style="display: flex;flex-direction: row;padding: 1.5rem;">
+                <div style="padding-right: 0.5rem;">Image Type</div>
+                <div>
+                    <select name="image-type" class="select-css" style="width: 13rem;" onchange="onchange_action();">
+                        <option selected="selected"></option> 
+                        <option value="Binary">Binary</option>
+                        <option value="Grayscale">Grayscale</option>
+                    </select>
+                </div>
+            </div>
+
+            <div style="display: flex;flex-direction: row;padding: 1.5rem;">
                 <div style="padding-right: 0.5rem;">Kernel Dimensions</div>
                 <div>
                     <select name="mk-nk-value" class="select-css" onchange="onchange_action();">
@@ -73,7 +84,8 @@
                 var kernelValue = document.getElementsByName("mk-nk-value")[0];
                 var m = document.getElementsByName("m-value")[0];
                 var n = document.getElementsByName("n-value")[0];
-                var mydata = kernelArray + '|' + imageArray + '|' + kernelValue.value + '|' + m.value + '|' + n.value;
+                var imageType = document.getElementsByName("image-type")[0];
+                var mydata = kernelArray + '|' + imageArray + '|' + kernelValue.value + '|' + m.value + '|' + n.value + '|' + imageType.value;
                 sessionStorage.setItem('myData', mydata);
                 startAnimation();
             }

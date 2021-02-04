@@ -1,14 +1,16 @@
 let kernelSquares = [];
 let imageSquares = [];
+let imageType = 'Binary';
 
 function onchange_action(){
     var kernelValue = document.getElementsByName("mk-nk-value")[0];
     var m = document.getElementsByName("m-value")[0];
     var n = document.getElementsByName("n-value")[0];
-    setup(kernelValue.value,m.value,n.value);
+    imageType = document.getElementsByName("image-type")[0].value;
+    setup(kernelValue.value,m.value,n.value,imageType);
 }
 
-function setup(kernelValue,mValue,nValue) {
+function setup(kernelValue,mValue,nValue,imageType) {
     kernelSquares = [];
     imageSquares = [];
     let width = window.innerWidth;
@@ -33,7 +35,8 @@ function setup(kernelValue,mValue,nValue) {
 
         for (let i = 1; i < n+1; i++) {
             for(let j = mk+2; j< m+mk+2; j++){
-                let b = new Square(i*(length), j*(length), length, i*length+(length/3),j*length+(2*length/3),'0',height/40);
+                let char = imageType=='Binary' ? '0' : Math.floor(Math.random()*10).toString();
+                let b = new Square(i*(length), j*(length), length, i*length+(length/3),j*length+(2*length/3),char,height/40);
                 imageSquares.push(b);
             }
         }
@@ -49,7 +52,8 @@ function setup(kernelValue,mValue,nValue) {
     
         for (let i = nk+2; i < nk+2+n; i++) {
             for(let j = 1; j< m+1; j++){
-                let b = new Square(i*(length), j*(length), length, i*length+(length/3),j*length+(2*length/3),'0',width/40);
+                let char = imageType=='Binary' ? '0' : Math.floor(Math.random()*10).toString();
+                let b = new Square(i*(length), j*(length), length, i*length+(length/3),j*length+(2*length/3),char,width/40);
                 imageSquares.push(b);
             }
         }
@@ -60,8 +64,10 @@ function mousePressed() {
     for (let i = 0; i < kernelSquares.length; i++) {
         kernelSquares[i].clicked(mouseX, mouseY);
     }
-    for (let i = 0; i < imageSquares.length; i++) {
-        imageSquares[i].clicked(mouseX, mouseY);
+    if(imageType=='Binary'){
+        for (let i = 0; i < imageSquares.length; i++) {
+            imageSquares[i].clicked(mouseX, mouseY);
+        }
     }
 }
 
