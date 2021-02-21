@@ -1,6 +1,8 @@
 <html>
     <head>
         <title>Dilation Animation</title>
+        <link rel="preconnect" href="https://fonts.gstatic.com">
+        <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300&display=swap" rel="stylesheet">
         <style>
             body {
                 margin: 0;
@@ -62,6 +64,11 @@
                 }
             }
         </script>
+
+        <div style="position: absolute; left: 50%; bottom: 0;">
+            <button id="play-button" class="btn-6 btn-6d" onclick="playAnimation();">Pause</button>
+            <button class="btn-6 btn-6d" onclick="nextStep();">Next Step</button>
+        </div>
 
         <div style="position: absolute;right: 0;bottom: 0;">
             <button class="btn-6 btn-6d" onclick="openFullscreen();">Full Screen</button>
