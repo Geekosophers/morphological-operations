@@ -16,20 +16,8 @@
                 border: 0;
                 background-color: #4b5399;
             }
-            /* Button 6d */
-            .btn-6d {
-                border: 2px solid #ffffff;
-                padding: 0.5rem;
-                color: #ffffff;
-                font-size: 1rem;
-                background: #e14e87;
-            }
-
-            .btn-6d:hover {
-                background: transparent;
-                border: 2px solid #ffffff;
-            }
         </style>
+        <link rel="stylesheet" href="css/styles.css">
     </head>
     <body id="fullscreen">
 
@@ -65,24 +53,50 @@
             }
         </script>
 
-        <div style="position: absolute; left: 50%; bottom: 0;">
-            <button id="play-button" class="btn-6 btn-6d" onclick="playAnimation();">Pause</button>
-            <button class="btn-6 btn-6d" onclick="nextStep();">Next Step</button>
+        <div style="position: absolute; left: 0; bottom: 0;">
+            <a href="https://www.geekosophers.com">
+                <button class="btn-animation">
+                    <div style="font-size: 1.2rem; text-align: left;">An Initiative by</div>
+                    <div style="font-size: 1.8rem; text-align: left;">Geekosophers</div>
+                </button>
+            </a>
+        </div>
+
+        <div style="position: absolute; left: 50%; bottom: 0;transform: translate(-50%, 0); padding: 0.5rem;">
+            <button id="play-button" class="btn-animation" onclick="playAnimation();">Pause</button>
+            <button class="btn-animation" onclick="nextStep();">Next Step</button>
         </div>
 
         <div style="position: absolute;right: 0;bottom: 0;">
-            <button class="btn-6 btn-6d" onclick="openFullscreen();">Full Screen</button>
+            <button id="full-screen" class="btn-animation" onclick="handleFullScreen();">Full Screen</button>
         </div>
 
         <script>
             var elem = document.getElementById("fullscreen");
-            function openFullscreen() {
-              if (elem.requestFullscreen) {
-                elem.requestFullscreen();
-              } else if (elem.webkitRequestFullscreen) { /* Safari */
-                elem.webkitRequestFullscreen();
-              } else if (elem.msRequestFullscreen) { /* IE11 */
-                elem.msRequestFullscreen();
+            var fullscreen = false;
+            function handleFullScreen() {
+              if(fullscreen==false){
+                if (elem.requestFullscreen) {
+                    elem.requestFullscreen();
+                } else if (elem.webkitRequestFullscreen) { /* Safari */
+                    elem.webkitRequestFullscreen();
+                } else if (elem.msRequestFullscreen) { /* IE11 */
+                    elem.msRequestFullscreen();
+                }
+                fullscreen = true;
+                document.getElementById("full-screen").innerHTML = "Exit Full Screen";
+              }
+
+              else if(fullscreen==true){
+                if (document.exitFullscreen) {
+                    document.exitFullscreen();
+                } else if (document.webkitExitFullscreen) { /* Safari */
+                    document.webkitExitFullscreen();
+                } else if (document.msExitFullscreen) { /* IE11 */
+                    document.msExitFullscreen();
+                }
+                fullscreen = false;
+                document.getElementById("full-screen").innerHTML = "Full Screen";
               }
             }
         </script>
