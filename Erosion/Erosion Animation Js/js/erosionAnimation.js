@@ -104,12 +104,12 @@ var updateKernelPosition = function(){
             updatedPositiony = updatedPositionx==0 ? ((updatedPositiony+1)<(paddedImageArray.length-kernelArray.length+1) ? (updatedPositiony+1): 0): updatedPositiony;
         }
         else if(imageType=='Grayscale'){
-            var minValue = '9';
+            var minValue = 255;
             colorTheCubeToDefault();
             for(y=paddedImageArray.length-1;y>=paddedImageArray.length-1-mk+1;y--){
                 for(x=0;x<nk;x++){
                     if(kernelArray[paddedImageArray.length-1-y][x]=='1'){
-                        var pixelValue = paddedImageArray[paddedImageArray.length-1-y+updatedPositiony][updatedPositionx+x];
+                        var pixelValue = parseInt(paddedImageArray[paddedImageArray.length-1-y+updatedPositiony][updatedPositionx+x]);
                         cubeObj[paddedImageArray.length-1-y+updatedPositiony][updatedPositionx+x].material.color.setHex( 0x4caf50 );
                         minValue = minValue>pixelValue ? pixelValue : minValue ;
                     }
@@ -126,7 +126,7 @@ var updateKernelPosition = function(){
                     }
                 }
             }
-            console.log(minValue);
+            minValue = minValue.toString();
             drawText(updatedPositionx-0.18+n+nk,m+Math.floor(kernelArray.length/2)-1-updatedPositiony-0.2,0.1,minValue,false,false);
             updatedPositionx = (updatedPositionx+1)%(paddedImageArray[0].length-kernelArray[0].length+1);
             updatedPositiony = updatedPositionx==0 ? ((updatedPositiony+1)<(paddedImageArray.length-kernelArray.length+1) ? (updatedPositiony+1): 0): updatedPositiony;
