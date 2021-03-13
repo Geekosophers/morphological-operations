@@ -163,7 +163,10 @@ for(i=0;i<m+2*Math.floor(mk/2);i++){
     a: for(j=0;j<n+2*Math.floor(nk/2);j++){
         for(k=0;k<Math.floor(kernelArray.length/2);k++){
             if(i==k || j==k || i==paddedImageArray.length-(k+1) || j==paddedImageArray[0].length-(k+1)){
-                paddedImageArray[i][j]='1';
+                if(imageType=='Binary')
+                    paddedImageArray[i][j]='1';
+                else
+                    paddedImageArray[i][j]='255';
                 continue a;
             }
         }

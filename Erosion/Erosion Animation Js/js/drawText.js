@@ -23,21 +23,26 @@ var drawText = function(xpos,ypos,zpos,textName,isKernel,pushToArray){
         } );
 
         const message = textName;
+        let shapes = ''
+        let xoffset = 0;
+        let yoffset = 0;
 
-        const shapes = font.generateShapes( message, 0.4 );
+        if(message==='255'){
+            shapes = font.generateShapes( message, 0.3 );
+            xoffset = 0.15;
+            yoffset = 0.1;
+        }
+        else
+        shapes = font.generateShapes( message, 0.4 );
 
         const geometry = new THREE.ShapeBufferGeometry( shapes );
-
         geometry.computeBoundingBox();
 
-        // const xMid = - 0.5 * ( geometry.boundingBox.max.x - geometry.boundingBox.min.x );
-
-        // geometry.translate( xMid, 0, 0 );
-
-
         const text = new THREE.Mesh( geometry, matLite );
-        text.position.x = xpos;
-        text.position.y = ypos;
+        
+        
+        text.position.x = xpos-xoffset;
+        text.position.y = ypos+yoffset;
         text.position.z = zpos;
         scene.add( text );
         
