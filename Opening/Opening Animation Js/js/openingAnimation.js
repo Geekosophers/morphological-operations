@@ -67,15 +67,21 @@ var colorTheCubeToDefault = function(paddedArray, cubeObj){
     }
 }
 
-var getPaddedImage = function(paddedArray,inputImageArray){
+var getPaddedImage = function(paddedArray,inputImageArray,process){
     for(i=0;i<m+2*Math.floor(mk/2);i++){
         a: for(j=0;j<n+2*Math.floor(nk/2);j++){
             for(k=0;k<Math.floor(kernelArray.length/2);k++){
                 if(i==k || j==k || i==paddedArray.length-(k+1) || j==paddedArray[0].length-(k+1)){
                     if(imageType=='Binary')
-                        paddedArray[i][j]='1';
+                        if(process==='erosion')
+                            paddedArray[i][j]='1';
+                        else
+                            paddedArray[i][j]='0';
                     else
-                        paddedArray[i][j]='255';
+                        if(process==='erosion')
+                            paddedArray[i][j]='255';
+                        else
+                            paddedArray[i][j]='0';
                     continue a;
                 }
             }
@@ -158,7 +164,7 @@ var updateKernelPosition = function(){
         }
         if(updatedPositionx==0 && updatedPositiony==0){
             playErosion = false;
-            getPaddedImage(paddedErodeArray,erodedImageArray);
+            getPaddedImage(paddedErodeArray,erodedImageArray,'dilation');
             drawPaddedImage(paddedErodeArray,n+nk,0,cubePaddedErodedObj)
             drawImage(n+Math.floor(nk/2)+1,0);
             colorTheCubeToDefault(paddedImageArray, cubePaddedInputObj);
@@ -262,7 +268,7 @@ var erodedImageArray = new Array(m).fill(0).map(() => new Array(n).fill(0));
 var paddedImageArray = new Array(m+2*Math.floor(mk/2)).fill(0).map(() => new Array(n+2*Math.floor(nk/2)).fill(0));
 var paddedErodeArray = new Array(m+2*Math.floor(mk/2)).fill(0).map(() => new Array(n+2*Math.floor(nk/2)).fill(0));
 
-getPaddedImage(paddedImageArray,imageArray)
+getPaddedImage(paddedImageArray,imageArray,'erosion')
 
 var controls = new THREE.OrbitControls(camera, renderer.domElement);
 
