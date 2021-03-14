@@ -1,0 +1,94 @@
+<html>
+    <head>
+        <title>Opening Animation</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="preconnect" href="https://fonts.gstatic.com">
+        <link href="https://fonts.googleapis.com/css2?family=Lato&display=swap" rel="stylesheet">
+        <link rel="stylesheet" href="css/styles.css">
+    </head>
+
+    <body>
+        <script src="https://cdn.jsdelivr.net/npm/p5@1.2.0/lib/p5.min.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script src="js/sketch.js"></script>
+
+        <div style="text-align: center;background-color: #e14e87;padding-top: 1.5rem;font-size: 2.4rem;"><b>OPENING - IMAGE PROCESSING</b></div>
+
+        <div class="base-class">
+
+            <div style="display: flex;flex-direction: row;padding: 1.5rem;">
+                <div style="padding-right: 0.5rem;">Image Type</div>
+                <div>
+                    <select name="image-type" class="select-css" style="width: 13rem;" onchange="onchange_action();">
+                        <option selected="selected"></option> 
+                        <option value="Binary">Binary</option>
+                        <option value="Grayscale">Grayscale</option>
+                    </select>
+                </div>
+            </div>
+
+            <div style="display: flex;flex-direction: row;padding: 1.5rem;">
+                <div style="padding-right: 0.5rem;">Kernel Dimensions</div>
+                <div>
+                    <select name="mk-nk-value" class="select-css" onchange="onchange_action();">
+                        <option selected="selected"></option> 
+                        <option value="3">3x3</option>
+                        <option value="5">5x5</option>
+                        <option value="7">7x7</option>
+                    </select>
+                </div>
+            </div>
+    
+            <div style="display: flex;flex-direction: row;padding: 1.5rem;">
+                <div style="padding-right: 0.5rem;">Image Dimensions</div>
+                <div>
+                    <select name="m-value" class="select-css" onchange="onchange_action();">
+                        <option selected="selected"></option> 
+                        <option value="3">3</option>
+                        <option value="5">5</option>
+                        <option value="7">7</option>
+                    </select>
+                </div>
+                <div style="padding: 0 5px;">x</div>
+                <div>
+                    <select name="n-value" class="select-css" onchange="onchange_action();">
+                        <option selected="selected"></option> 
+                        <option value="3">3</option>
+                        <option value="5">5</option>
+                        <option value="7">7</option>
+                    </select>
+                </div>
+            </div> 
+
+            <div style="padding: 0 1.5rem;">
+                <button class="btn-6 btn-6d" onclick="myFunction()">Start Animation</button>
+            </div>
+             
+        </div>
+
+        <script>
+            var startAnimation = function(){
+                window.open("animation.html");
+            }
+
+            var myFunction = function(){
+                kernelArray = '';
+                imageArray = '';
+                for(i=0;i<kernelSquares.length;i++){
+                    console.log(kernelSquares[i].textValue);
+                    kernelArray += kernelSquares[i].textValue;
+                }
+                for(i=0;i<imageSquares.length;i++){
+                    imageArray += imageSquares[i].textValue;
+                }
+                var kernelValue = document.getElementsByName("mk-nk-value")[0];
+                var m = document.getElementsByName("m-value")[0];
+                var n = document.getElementsByName("n-value")[0];
+                var imageType = document.getElementsByName("image-type")[0];
+                var mydata = kernelArray + '|' + imageArray + '|' + kernelValue.value + '|' + m.value + '|' + n.value + '|' + imageType.value;
+                sessionStorage.setItem('myData', mydata);
+                startAnimation();
+            }
+        </script>
+    </body>
+</html>

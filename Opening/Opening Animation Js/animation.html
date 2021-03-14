@@ -1,0 +1,105 @@
+<html>
+    <head>
+        <title>Opening Animation</title>
+        <style>
+            body {
+                margin: 0;
+            }
+            canvas {
+                width: 100%;
+                height: 100%;
+            }
+            .align-right {
+                text-align: right;
+                border: 0;
+                background-color: #4b5399;
+            }
+        </style>
+            <link rel="stylesheet" href="css/styles.css">
+    </head>
+    <body id="fullscreen">
+
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script src="js/three.js"></script>
+        <script src="js/OrbitControls.js"></script>
+        <script src="js/drawText.js"></script>
+        <script src="js/drawCube.js"></script>
+        
+        <script>
+            var myData = sessionStorage.getItem('myData');
+            var myDataArray = myData.split('|');
+            
+            var kernelDim = parseInt(myDataArray[2]);
+            var m = parseInt(myDataArray[3]);
+            var n = parseInt(myDataArray[4]);
+            var imageType = myDataArray[5];
+            var kernelArray = new Array(kernelDim).fill(0).map(() => new Array(kernelDim).fill(0));
+            var k = 0;
+            for(i=0;i<kernelDim;i++){
+                for(j=0;j<kernelDim;j++){
+                    kernelArray[j][i] = myDataArray[0][k];
+                    k++;
+                }
+            }
+            var imageArray = new Array(m).fill(0).map(() => new Array(n).fill(0));
+            var k = 0;
+            for(i=0;i<n;i++){
+                for(j=0;j<m;j++){
+                    imageArray[j][i] = myDataArray[1][k];
+                    k++;
+                }
+            }
+        </script>
+
+        <div style="position: absolute; left: 0; bottom: 0;">
+            <a href="https://www.geekosophers.com">
+                <button class="btn-animation">
+                    <div style="font-size: 1.2rem; text-align: left;">An Initiative by</div>
+                    <div style="font-size: 1.8rem; text-align: left;">Geekosophers</div>
+                </button>
+            </a>
+        </div>
+
+        <div style="position: absolute; left: 50%; bottom: 0;transform: translate(-50%, 0); padding: 0.5rem;">
+            <button id="play-button" class="btn-animation" onclick="playAnimation();">Pause</button>
+            <button class="btn-animation" onclick="nextStep();">Next Step</button>
+        </div>
+
+        <div style="position: absolute;right: 0;bottom: 0;">
+            <button id="full-screen" class="btn-animation" onclick="handleFullScreen();">Full Screen</button>
+        </div>
+
+        <script>
+            var elem = document.getElementById("fullscreen");
+            var fullscreen = false;
+            function handleFullScreen() {
+                if(fullscreen==false){
+                    if (elem.requestFullscreen) {
+                        elem.requestFullscreen();
+                    } else if (elem.webkitRequestFullscreen) { /* Safari */
+                        elem.webkitRequestFullscreen();
+                    } else if (elem.msRequestFullscreen) { /* IE11 */
+                        elem.msRequestFullscreen();
+                    }
+                    fullscreen = true;
+                    document.getElementById("full-screen").innerHTML = "Exit Full Screen";
+                }
+
+                else if(fullscreen==true){
+                    if (document.exitFullscreen) {
+                        document.exitFullscreen();
+                    } else if (document.webkitExitFullscreen) { /* Safari */
+                        document.webkitExitFullscreen();
+                    } else if (document.msExitFullscreen) { /* IE11 */
+                        document.msExitFullscreen();
+                    }
+                    fullscreen = false;
+                    document.getElementById("full-screen").innerHTML = "Full Screen";
+                }
+            }
+        </script>
+
+        <script src="js/openingAnimation.js"></script> 
+
+    </body>
+</html>
