@@ -21,3 +21,22 @@ Dilation operator takes two inputs, one is the image and the other one is the st
 Read more about Dilation in the [blog](https://www.geekosophers.com/blogs/CvsGPWNqgPlxW85PB7AH).
 ### Dilation Animation- 
 The interactive animation can be viewed [here](https://animation.geekosophers.com/Dilation/Dilation%20Animation%20Js/index.html).
+
+## 2. Erosion
+### Blog Post-
+Coming soon
+### Erosion Animation-
+The interactive animation can be viewed [here](https://animation.geekosophers.com/Erosion/Erosion%20Animation%20Js/index.html).
+
+## 3. Opening-
+### Blog Post-
+Coming soon
+### Opening Animation-
+The interactive animation can be viewed [here](https://animation.geekosophers.com/Opening/Opening%20Animation%20Js/index.html).
+
+## 4. Closing-
+### Blog Post-
+Coming soon
+### Closing Animation-
+The interactive animation can be viewed [here](https://animation.geekosophers.com/Closing/Closing%20Animation%20Js/index.html).
+
