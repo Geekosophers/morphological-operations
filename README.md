@@ -15,7 +15,7 @@ Dilation operator takes two inputs, one is the image and the other one is the st
 2. Size of input and output image is same.
 3. It grows the object and fill any voids in the input image.
 4. The nature of thickening is determined by the structuring element.
-5. Dilation can be performed on Binary images as well as Grayscale images
+5. Dilation can be performed on Binary images as well as Grayscale images.
 
 ### Blog Post-
 Read more about Dilation in the [blog](https://www.geekosophers.com/blogs/CvsGPWNqgPlxW85PB7AH).
@@ -23,8 +23,18 @@ Read more about Dilation in the [blog](https://www.geekosophers.com/blogs/CvsGPW
 The interactive animation can be viewed [here](https://animation.geekosophers.com/Dilation/Dilation%20Animation%20Js/index.html).
 
 ## 2. Erosion
+Erosion is one of the most common morphological operation along with Dilation. Erosion is used to remove pixels from the boundary of the input image shrinking the object.
+Erosion operator takes two inputs, one is the image and the other one is the structuring element. The structuring element determines the effect of erosion on the input image.
+
+### Key points about Erosion-
+1. Erosion is the dual of dilation.
+2. Size of input and output image is same.
+3. It shrinks the object in the input image.
+4. The nature of thinning(shrinking) is determined by the structuring element.
+5. Erosion can be performed on Binary images as well as Grayscale images.
+
 ### Blog Post-
-Coming soon
+Read more about the Erosion in the [blog](https://www.geekosophers.com/blogs/9Ltu5W4s8lKIBHyPnWkp).
 ### Erosion Animation-
 The interactive animation can be viewed [here](https://animation.geekosophers.com/Erosion/Erosion%20Animation%20Js/index.html).
 
