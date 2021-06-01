@@ -1,6 +1,7 @@
 let kernelSquares = [];
 let imageSquares = [];
 let imageType = 'Binary';
+let textList = ['',''];
 
 function onchange_action(){
     var kernelValue = document.getElementsByName("mk-nk-value")[0];
@@ -27,36 +28,48 @@ function setup(kernelValue,mValue,nValue,imageType) {
         length = height/20;  
         
         for (let i = 1; i < nk+1; i++) {
-            for(let j = 1; j< mk+1; j++){
+            for(let j = 2; j< mk+2; j++){
                 let b = new Square(i*(length), j*(length), length, i*length+(length/3),j*length+(2*length/3),'0',height/40);
                 kernelSquares.push(b);
             }
         }
 
         for (let i = 1; i < n+1; i++) {
-            for(let j = mk+2; j< m+mk+2; j++){
+            for(let j = mk+4; j< m+mk+4; j++){
                 let char = imageType=='Binary' ? '0' : Math.floor(Math.random()*10).toString();
                 let b = new Square(i*(length), j*(length), length, i*length+(length/3),j*length+(2*length/3),char,height/40);
                 imageSquares.push(b);
             }
         }
+
+        let kernelHeading = new Heading(length,length,'Kernel Matrix',height/40);
+        textList[0] = kernelHeading;
+
+        let imageHeading = new Heading(length,length*(mk+3),'Image Matrix',height/40);
+        textList[1] = imageHeading;
         
     }
     else{
         for (let i = 1; i < nk+1; i++) {
-            for(let j = 1; j< mk+1; j++){
+            for(let j = 2; j< mk+2; j++){
                 let b = new Square(i*(length), j*(length), length, i*length+(length/3),j*length+(2*length/3),'0',width/40);
                 kernelSquares.push(b);
             }
         }
     
         for (let i = nk+2; i < nk+2+n; i++) {
-            for(let j = 1; j< m+1; j++){
+            for(let j = 2; j< m+2; j++){
                 let char = imageType=='Binary' ? '0' : Math.floor(Math.random()*10).toString();
                 let b = new Square(i*(length), j*(length), length, i*length+(length/3),j*length+(2*length/3),char,width/40);
                 imageSquares.push(b);
             }
         }
+
+        let kernelHeading = new Heading(length,length,'Kernel Matrix',width/40);
+        textList[0] = kernelHeading;
+
+        let imageHeading = new Heading(length*(nk+2),length,'Image Matrix',width/40);
+        textList[1] = imageHeading;
     }
 }
 
@@ -69,6 +82,8 @@ function mousePressed() {
             imageSquares[i].clicked(mouseX, mouseY);
         }
     }
+    textList[0].show();
+    textList[1].show();
 }
 
 function draw() {
@@ -79,6 +94,8 @@ function draw() {
     for (let i = 0; i < imageSquares.length; i++) {
         imageSquares[i].show();
     }
+    textList[0].show();
+    textList[1].show();
 }
 
 class Square {
@@ -108,6 +125,22 @@ class Square {
         textSize(this.textSize);
         strokeWeight(1);
         fill(0);
+        text(this.textValue,this.textx,this.texty);
+    }
+}
+
+class Heading {
+    constructor(textx, texty, textValue, textSize) {
+        this.textx = textx;
+        this.texty = texty;
+        this.textValue = textValue;
+        this.textSize = textSize;
+    }
+
+    show() {
+        strokeWeight(2);
+        textSize(this.textSize);
+        fill('white');
         text(this.textValue,this.textx,this.texty);
     }
 }
