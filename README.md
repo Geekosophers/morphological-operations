@@ -39,8 +39,18 @@ Read more about the Erosion in the [blog](https://www.geekosophers.com/blogs/9Lt
 The interactive animation can be viewed [here](https://animation.geekosophers.com/Erosion/Erosion%20Animation%20Js/index.html).
 
 ## 3. Opening-
+Opening is Erosion followed by Dilation.
+The fundamental of opening process has similar effect as erosion which is to remove pixels from the boundary of the input image shrinking the object. Although, it is less destructive than erosion in nature.
+
+### Key points about Opening-
+1. Opening is the dual of closing.
+2. Size of input and output image is same.
+3. It shrinks the object in the input image, same as erosion.
+4. The nature of thinning(shrinking) is determined by the structuring element.
+5. Opening can be performed on Binary images as well as Grayscale images.
+
 ### Blog Post-
-Coming soon
+Read more about the Erosion in the [blog](https://www.geekosophers.com/blogs/gl23OtTd8usFkaXMJrA4).
 ### Opening Animation-
 The interactive animation can be viewed [here](https://animation.geekosophers.com/Opening/Opening%20Animation%20Js/index.html).
 
