@@ -50,13 +50,23 @@ The fundamental of opening process has similar effect as erosion which is to rem
 5. Opening can be performed on Binary images as well as Grayscale images.
 
 ### Blog Post-
-Read more about the Erosion in the [blog](https://www.geekosophers.com/blogs/gl23OtTd8usFkaXMJrA4).
+Read more about the Opening in the [blog](https://www.geekosophers.com/blogs/gl23OtTd8usFkaXMJrA4).
 ### Opening Animation-
 The interactive animation can be viewed [here](https://animation.geekosophers.com/Opening/Opening%20Animation%20Js/index.html).
 
 ## 4. Closing-
+Closing is Dilation followed by Erosion.
+The fundamental of closing process has similar effect as dilation which is to add pixels to the boundary of the input image making the object more visible and fill small voids in the image. Although, it is less destructive than dilation in nature.
+
+### Key points about Opening-
+1. Closing is the dual of opening.
+2. Size of input and output image is same.
+3. It grows the object and fill any voids in the input image, same as dilation.
+4. The nature of thickening is determined by the structuring element.
+5. Closing can be performed on Binary images as well as Grayscale images.
+
 ### Blog Post-
-Coming soon
+Read more about the Closing in the [blog](https://www.geekosophers.com/blogs/kun8yQ1X5kY5lqLSHqvK).
 ### Closing Animation-
 The interactive animation can be viewed [here](https://animation.geekosophers.com/Closing/Closing%20Animation%20Js/index.html).
 
