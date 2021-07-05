@@ -75,10 +75,17 @@ function setup(kernelValue,mValue,nValue,imageType) {
     }
 }
 
-const isTouchDevice =  function() {
-    const is_or_not =  'ontouchstart' in window        // works on most browsers 
-        || navigator.maxTouchPoints;       // works on IE10/11 and Surface
+function isSafari() {
+    var is_safari = navigator.userAgent.toLowerCase().indexOf('safari/') > -1;
+    return is_safari;
+}
 
+const isTouchDevice =  function() {
+    const is_or_not =  ('ontouchstart' in window        // works on most browsers 
+        || navigator.maxTouchPoints)                    // works on IE10/11 and Surface;       
+        && !isSafari();
+
+    console.log('is_or_not',is_or_not)
     return is_or_not ? true : false; // Fix to always return true or false
 };
 
