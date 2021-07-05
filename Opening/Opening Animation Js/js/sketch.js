@@ -73,7 +73,39 @@ function setup(kernelValue,mValue,nValue,imageType) {
     }
 }
 
+const isTouchDevice =  function() {
+    const is_or_not =  'ontouchstart' in window        // works on most browsers 
+        || navigator.maxTouchPoints;       // works on IE10/11 and Surface
+
+    return is_or_not ? true : false; // Fix to always return true or false
+};
+
 function mousePressed() {
+    if( isTouchDevice() )
+        return;
+
+    mousePressX = mouseX;
+    mousePressY = mouseY;
+}
+
+function mouseReleased(e) {
+    if( isTouchDevice() )
+        return;
+
+    if(mousePressX == mouseX && mousePressY == mouseY)
+        singleTap();
+
+}
+
+function mouseClicked() {
+    if( !isTouchDevice() )
+        return;
+
+    singleTap();
+}
+
+function singleTap() {
+
     for (let i = 0; i < kernelSquares.length; i++) {
         kernelSquares[i].clicked(mouseX, mouseY);
     }
@@ -82,8 +114,6 @@ function mousePressed() {
             imageSquares[i].clicked(mouseX, mouseY);
         }
     }
-    textList[0].show();
-    textList[1].show();
 }
 
 function draw() {
