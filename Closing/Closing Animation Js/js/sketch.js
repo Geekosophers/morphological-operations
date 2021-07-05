@@ -74,15 +74,20 @@ function setup(kernelValue,mValue,nValue,imageType) {
 }
 
 function isSafari() {
+    // var is_safari = navigator.userAgent.toLowerCase().indexOf('safari/') > -1;
+    // return is_safari;
 
-    var ua = navigator.userAgent.toLowerCase(); 
-    if (ua.indexOf('safari') != -1) { 
-        if (ua.indexOf('chrome') > -1) {
-            return false; // Chrome
-        } else {
-            return true; // Safari
-        }
-    }
+    // var ua = navigator.userAgent.toLowerCase(); 
+    // if (ua.indexOf('safari') != -1) { 
+    //     if (ua.indexOf('chrome') > -1) {
+    //         return false; // Chrome
+    //     } else {
+    //         return true; // Safari
+    //     }
+    // }
+
+    var isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
+    return isSafari;
 }
 
 const isTouchDevice =  function() {
