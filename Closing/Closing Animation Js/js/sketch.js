@@ -104,7 +104,7 @@ const isTouchDevice =  function() {
         || navigator.maxTouchPoints)                    // works on IE10/11 and Surface;       
         && !isSafari();
 
-    document.getElementById("testelem").innerHTML += isChromeiOS().toString()
+    // document.getElementById("testelem").innerHTML += isChromeiOS().toString()
     console.log('is chrome ios')
 
     return is_or_not ? true : false; // Fix to always return true or false
