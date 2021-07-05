@@ -74,8 +74,15 @@ function setup(kernelValue,mValue,nValue,imageType) {
 }
 
 function isSafari() {
-    var is_safari = navigator.userAgent.toLowerCase().indexOf('safari/') > -1;
-    return is_safari;
+
+    var ua = navigator.userAgent.toLowerCase(); 
+    if (ua.indexOf('safari') != -1) { 
+        if (ua.indexOf('chrome') > -1) {
+            return false; // Chrome
+        } else {
+            return true; // Safari
+        }
+    }
 }
 
 const isTouchDevice =  function() {
@@ -83,13 +90,16 @@ const isTouchDevice =  function() {
         || navigator.maxTouchPoints)                    // works on IE10/11 and Surface;       
         && !isSafari();
 
-    console.log('is_or_not',is_or_not)
+    document.getElementById("testelem").innerHTML += isSafari().toString()
+
     return is_or_not ? true : false; // Fix to always return true or false
 };
 
 function mousePressed() {
-    if( isTouchDevice() )
+    if( isTouchDevice() ){
+        console.log('touch device')
         return;
+    }
 
     mousePressX = mouseX;
     mousePressY = mouseY;
