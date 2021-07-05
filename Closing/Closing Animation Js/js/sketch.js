@@ -90,12 +90,21 @@ function isSafari() {
     return isSafari;
 }
 
+function isChromeiOS() {
+    if(/CriOS/i.test(navigator.userAgent) &&
+        /iphone|ipod|ipad/i.test(navigator.userAgent)){
+        return true;
+    }else{
+        return false;
+    }
+}
+
 const isTouchDevice =  function() {
     const is_or_not =  ('ontouchstart' in window        // works on most browsers 
         || navigator.maxTouchPoints)                    // works on IE10/11 and Surface;       
         && !isSafari();
 
-    document.getElementById("testelem").innerHTML += isSafari().toString()
+    document.getElementById("testelem").innerHTML += isChromeiOS().toString()
 
     return is_or_not ? true : false; // Fix to always return true or false
 };
