@@ -105,6 +105,7 @@ const isTouchDevice =  function() {
         && !isSafari();
 
     document.getElementById("testelem").innerHTML += isChromeiOS().toString()
+    console.log('is chrome ios')
 
     return is_or_not ? true : false; // Fix to always return true or false
 };
