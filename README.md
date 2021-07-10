@@ -2,7 +2,7 @@
 The project is a part of the Series Visualizing the Code with Geekosophers which is designed to give users the ability to visualize different morphological operations which includes- Dilation, Erosion, Opening and Closing.
 
 # Visualising the Code with Geekosophers
-<img src="https://firebasestorage.googleapis.com/v0/b/gs-website-20870.appspot.com/o/blog-images%2Fdilation-thumbnail.png?alt=media&token=918b8dd3-19f9-4fcf-be9a-f6e4b69c1191" width="100%" ><img/>
+<img src="https://firebasestorage.googleapis.com/v0/b/gs-website-20870.appspot.com/o/blog-images%2Fdilation-thumbnail.png?alt=media&token=965741f8-8e38-4782-8cc2-ec16d617d2d2" width="100%" ><img/>
 **Brief about the series-** It is an initiative taken by us to bring the world of algorithms closer to the tech enthusiasts by helping them visualise the algorithms. Join us in this journey where we will be covering a wide range of algorithms from Simple Binary search to complex Data Structure and Algorithms. Learn more about the series by clicking [here](https://www.geekosophers.com/blogs/Gu5linHJme9SHp8wblaH).
 
 # Morphological Operations
